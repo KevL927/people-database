@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 const PeopleSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     favoriteCity: {
         type: String,
