@@ -28,4 +28,22 @@ peopleRouter.get('/:peopleId', function(req, res) {
   }
 });
 
+peopleRouter.post('/', function(req, res) {
+  var name = req.body.name;
+  var favoriteCity = req.body.favoriteCity;
+
+  People.create({ name: name, favoriteCity: favoriteCity }, function(err, people) {
+    if (name === undefined || favoriteCity === undefined) {
+      return res.status(422).json({error: 'Missing field'});
+    }
+    else if (err && err.errmsg.slice(0,6) === 'E11000') {
+      return res.status(409).json({error: 'User already exists'});
+    }
+    else if (err) {
+      return res.sendStatus(500);
+    }
+    return res.status(201).json({message: 'User created successfully'});
+  })
+});
+
 module.exports = peopleRouter;
