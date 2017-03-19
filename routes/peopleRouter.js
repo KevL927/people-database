@@ -13,4 +13,19 @@ peopleRouter.get('/', function(req, res) {
   });
 });
 
+peopleRouter.get('/:peopleId', function(req, res) {
+  var peopleId = req.params.peopleId;
+
+  if (peopleId.match(/^[0-9a-fA-F]{24}$/)) {
+    People.findById(peopleId, function(err, people) {
+      if (err) {
+        return res.status(err);
+      }
+      return res.status(200).json(people);
+    });
+  } else {
+      return res.sendStatus(404);
+  }
+});
+
 module.exports = peopleRouter;
