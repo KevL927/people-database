@@ -64,5 +64,17 @@ peopleRouter.put('/', function(req, res) {
   return res.sendStatus(404);
   }
 });
- 
+
+peopleRouter.delete('/:peopleId', function(req,res) {
+  var peopleId = req.params.peopleId;
+
+  if (peopleId.match(/^[0-9a-fA-F]{24}$/)) {
+    People.findByIdAndRemove(peopleId, function(err, people) {
+      return res.status(200).json({message: 'User deleted successfully'});
+    })
+  } else {
+      return res.sendStatus(404);
+  }
+});
+
 module.exports = peopleRouter;
