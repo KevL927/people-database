@@ -46,4 +46,23 @@ peopleRouter.post('/', function(req, res) {
   })
 });
 
+peopleRouter.put('/', function(req, res) {
+  var peopleId = req.body._id;
+  var name = req.body.name;
+  var favoriteCity = req.body.favoriteCity;
+
+  if (peopleId.match(/^[0-9a-fA-F]{24}$/) && name && favoriteCity) {
+    People.findByIdAndUpdate(peopleId, { name: name, favoriteCity: favoriteCity }, { new: true },
+      function(err, people) {
+        if (err) {
+          return res.sendStatus(500);
+        }
+        return res.status(201).json({message: 'User updated successfully'});
+      }
+    )
+  } else {
+  return res.sendStatus(404);
+  }
+});
+ 
 module.exports = peopleRouter;
