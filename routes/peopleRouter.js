@@ -4,9 +4,46 @@ var mongoose = require('mongoose');
 
 var People = require('../models/people');
 
-/* GET home page. */
-peopleRouter.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+peopleRouter.get('/', function(req, res) {
+  People.find({}, function(err, people) {
+    if (err) {
+      return res.status(err);
+    }
+    return res.status(200).json(people);
+  });
+});
+
+peopleRouter.get('/:peopleId', function(req, res) {
+  var peopleId = req.params.peopleId;
+
+  if (peopleId.match(/^[0-9a-fA-F]{24}$/)) {
+    People.findById(peopleId, function(err, people) {
+      if (err) {
+        return res.status(err);
+      }
+      return res.status(200).json(people);
+    });
+  } else {
+      return res.sendStatus(404);
+  }
+});
+
+peopleRouter.post('/', function(req, res) {
+  var name = req.body.name;
+  var favoriteCity = req.body.favoriteCity;
+
+  People.create({ name: name, favoriteCity: favoriteCity }, function(err, people) {
+    if (name === undefined || favoriteCity === undefined) {
+      return res.status(422).json({error: 'Missing field'});
+    }
+    else if (err && err.errmsg.slice(0,6) === 'E11000') {
+      return res.status(409).json({error: 'User already exists'});
+    }
+    else if (err) {
+      return res.sendStatus(500);
+    }
+    return res.status(201).json({message: 'User created successfully'});
+  })
 });
 
 module.exports = peopleRouter;
