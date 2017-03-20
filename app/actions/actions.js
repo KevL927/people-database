@@ -67,3 +67,43 @@ export const fetchSpecificPersonData = personId => {
   	.catch(err => dispatch(fetchSpecificPersonDataError(err)));
   }
 };
+
+export const POST_PERSON_DATA_SUCCESS = 'POST_PERSON_DATA_SUCCESS';
+export const postPersonDataSuccess = successMessage => {
+    return {
+        type: POST_PERSON_DATA_SUCCESS,
+        payload: successMessage
+    };
+};
+
+export const POST_PERSON_DATA_ERROR = 'POST_PERSON_DATA_ERROR';
+export const postPersonDataError = error => {
+    return {
+        type: POST_PERSON_DATA_ERROR,
+        payload: error
+    };
+}
+
+const POST_PERSON_DATA = 'POST_PERSON_DATA';
+export const postPersonData = (name, favoriteCity) => {
+  return (dispatch) => {
+  	return fetch('http://localhost:3000/people',
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({name: name, favoriteCity: favoriteCity})
+      }
+    )
+  	.then(res => {
+  		return res.json();
+  	})
+    .then(data => {
+      dispatch(postPersonDataSuccess(data));
+      dispatch(fetchPeopleDatabase());
+    })
+  	.catch(err => dispatch(postPersonDataError(err)));
+  }
+};
