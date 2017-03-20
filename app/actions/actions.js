@@ -19,7 +19,7 @@ export const fetchPeopleDatabaseError = error => {
 const FETCH_PEOPLEDATABASE = 'FETCH_PEOPLE_DATABASE';
 export const fetchPeopleDatabase = () => {
   return (dispatch) => {
-  	return fetch('http://localhost:3000/people')
+  	return fetch('https://people-database.herokuapp.com/people')
   	.then(response => response.json().then(json => ({ json, response })))
   	.then(({json, response}) => {
   		if (response.ok === false) {
@@ -53,7 +53,7 @@ export const fetchSpecificPersonDataError = error => {
 const FETCH_SPECIFIC_PERSON_DATA = 'FETCH_SPECIFIC_PERSON_DATA';
 export const fetchSpecificPersonData = personId => {
   return (dispatch, getState) => {
-  	return fetch('http://localhost:3000/people/' + personId)
+  	return fetch('https://people-database.herokuapp.com/people' + personId)
   	.then(response => response.json().then(json => ({ json, response })))
   	.then(({json, response}) => {
   		if (response.ok === false) {
@@ -87,7 +87,7 @@ export const postPersonDataError = error => {
 const POST_PERSON_DATA = 'POST_PERSON_DATA';
 export const postPersonData = (name, favoriteCity) => {
   return (dispatch) => {
-  	return fetch('http://localhost:3000/people',
+  	return fetch('https://people-database.herokuapp.com/people',
       {
         headers: {
           'Accept': 'application/json',
@@ -127,7 +127,7 @@ export const putPersonDataError = error => {
 const PUT_PERSON_DATA = 'PUT_PERSON_DATA';
 export const putPersonData = (personId, name, favoriteCity) => {
   return (dispatch) => {
-  	return fetch('http://localhost:3000/people',
+  	return fetch('https://people-database.herokuapp.com/people',
       {
         headers: {
           'Accept': 'application/json',
@@ -168,7 +168,7 @@ export const deletePersonDataError = error => {
 const DELETE_PERSON_DATA = 'DELETE_PERSON_DATA';
 export const deletePersonData = (personId) => {
   return (dispatch) => {
-  	return fetch('http://localhost:3000/people/' + personId,
+  	return fetch('https://people-database.herokuapp.com/people/' + personId,
       {
         method: 'DELETE',
       }
