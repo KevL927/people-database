@@ -148,3 +148,38 @@ export const putPersonData = (personId, name, favoriteCity) => {
   	.catch(err => dispatch(putPersonDataError(err)));
   }
 };
+
+export const DELETE_PERSON_DATA_SUCCESS = 'DELETE_PERSON_DATA_SUCCESS';
+export const deletePersonDataSuccess = successMessage => {
+    return {
+        type: DELETE_PERSON_DATA_SUCCESS,
+        payload: successMessage
+    };
+};
+
+export const DELETE_PERSON_DATA_ERROR = 'DELETE_PERSON_DATA_ERROR';
+export const deletePersonDataError = error => {
+    return {
+        type: DELETE_PERSON_DATA_ERROR,
+        payload: error
+    };
+}
+
+const DELETE_PERSON_DATA = 'DELETE_PERSON_DATA';
+export const deletePersonData = (personId) => {
+  return (dispatch) => {
+  	return fetch('http://localhost:3000/people/' + personId,
+      {
+        method: 'DELETE',
+      }
+    )
+  	.then(res => {
+  		return res.json();
+  	})
+  	.then(data => {
+  		dispatch(deletePersonDataSuccess(data));
+      dispatch(fetchPeopleDatabase());
+  	})
+  	.catch(err => dispatch(deletePersonDataError(err)));
+  }
+};
