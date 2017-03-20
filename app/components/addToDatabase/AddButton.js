@@ -25,7 +25,7 @@ class AddButton extends Component {
             Favorite City:
             <input type="text" ref="favoriteCityInput" />
           </label>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Add" />
         </form>
       </div>
     )
@@ -34,6 +34,8 @@ class AddButton extends Component {
   submitForm(event) {
     event.preventDefault();
     this.props.dispatch(actions.postPersonData(this.refs.nameInput.value, this.refs.favoriteCityInput.value));
+    this.refs.nameInput.value = '';
+    this.refs.favoriteCityInput.value = '';
   }
 
   render() {
