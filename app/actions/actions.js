@@ -107,3 +107,44 @@ export const postPersonData = (name, favoriteCity) => {
   	.catch(err => dispatch(postPersonDataError(err)));
   }
 };
+
+export const PUT_PERSON_DATA_SUCCESS = 'PUT_PERSON_DATA_SUCCESS';
+export const putPersonDataSuccess = successMessage => {
+    return {
+        type: PUT_PERSON_DATA_SUCCESS,
+        payload: successMessage
+    };
+};
+
+export const PUT_PERSON_DATA_ERROR = 'PUT_PERSON_DATA_ERROR';
+export const putPersonDataError = error => {
+    return {
+        type: PUT_PERSON_DATA_ERROR,
+        payload: error
+    };
+}
+
+const PUT_PERSON_DATA = 'PUT_PERSON_DATA';
+export const putPersonData = (personId, name, favoriteCity) => {
+  return (dispatch) => {
+  	return fetch('http://localhost:3000/people',
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'PUT',
+        body: JSON.stringify({_id: personId, name: name, favoriteCity: favoriteCity})
+      }
+    )
+  	.then(res => {
+  		return res.json();
+  	})
+    .then(data => {
+      console.log(data);
+      dispatch(putPersonDataSuccess(data));
+      dispatch(fetchSpecificPersonData(personId));
+    })
+  	.catch(err => dispatch(putPersonDataError(err)));
+  }
+};
