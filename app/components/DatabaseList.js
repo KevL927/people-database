@@ -48,7 +48,6 @@ class DatabaseList extends Component {
     this.showEditForm(personId, name, favoriteCity);
     this.refs.nameInput.value = '';
     this.refs.favoriteCityInput.value = '';
-
   }
 
   onClickDeletePersonData(event, personId) {
