@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions/actions';
 import PersonObject from './renderPersonData/PersonObject';
+import AddButton from './addToDatabase/AddButton';
 
 class DatabaseList extends Component {
   componentDidMount() {
@@ -10,10 +11,16 @@ class DatabaseList extends Component {
   //  this.props.dispatch(actions.putPersonData('58ce201e95362d0d6380f63a', 'drgdrg', 'nfstdrth'));
   }
 
+
+
   renderChildComponents() {
     if(this.props.people) {
       return (
-        <div><PersonObject peopleObject={this.props.people} /></div>
+        <div>
+          <PersonObject
+            peopleObject={this.props.people}
+          />
+        </div>
       )
     } else {
       return <div>No person in database</div>;
@@ -21,10 +28,14 @@ class DatabaseList extends Component {
   }
 
   render(){
-    console.log(this.props.people);
     return (
       <div className="container">
-        {this.renderChildComponents()}
+        <div>
+          {this.renderChildComponents()}
+        </div>
+        <div>
+          <AddButton />
+        </div>
       </div>
     );
   }
