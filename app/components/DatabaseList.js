@@ -11,7 +11,10 @@ class DatabaseList extends Component {
   //  this.props.dispatch(actions.putPersonData('58ce201e95362d0d6380f63a', 'drgdrg', 'nfstdrth'));
   }
 
-
+  onClickDeletePersonData(event, personId) {
+    event.preventDefault();
+    this.props.dispatch(actions.deletePersonData(personId));
+  }
 
   renderChildComponents() {
     if(this.props.people) {
@@ -19,6 +22,7 @@ class DatabaseList extends Component {
         <div>
           <PersonObject
             peopleObject={this.props.people}
+            onClickDeletePersonData={this.onClickDeletePersonData.bind(this)}
           />
         </div>
       )

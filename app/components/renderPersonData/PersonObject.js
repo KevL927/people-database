@@ -2,10 +2,10 @@ import React from 'react';
 
 import PersonData from './PersonData';
 
-export default (props) => {
+export default ({ peopleObject, onClickDeletePersonData, personId }) => {
   return (
     <div>
-      {props.peopleObject.map((info, index) => <PersonData key={index} personInfo={info} />)}
+      {peopleObject.map((info, index) => <PersonData key={index} personInfo={info} onClickDeletePersonData={onClickDeletePersonData} />)}
     </div>
   );
 }
