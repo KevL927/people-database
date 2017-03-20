@@ -49,13 +49,23 @@ export default (state, action) => {
 			    return Object.assign({}, state, {
 			        error: action.payload
 			    });
-			
+
 			  case 'PUT_PERSON_DATA_SUCCESS':
 			    return Object.assign({}, state, {
 			        message: action.payload.message
 			    });
 
 			  case 'PUT_PERSON_DATA_ERROR':
+			    return Object.assign({}, state, {
+			        error: action.payload
+			    });
+
+				case 'DELETE_PERSON_DATA_SUCCESS':
+			    return Object.assign({}, state, {
+			        message: action.payload
+			    });
+
+			  case 'DELETE_PERSON_DATA_ERROR':
 			    return Object.assign({}, state, {
 			        error: action.payload
 			    });
