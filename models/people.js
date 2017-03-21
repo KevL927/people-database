@@ -13,4 +13,12 @@ const PeopleSchema = new mongoose.Schema({
     },
 });
 
+PeopleSchema.methods.apiRepr = function() {
+  return {
+    id: this._id,
+    name: this.name,
+    favoriteCity: this.favoriteCity
+  };
+}
+
 module.exports = mongoose.model('People', PeopleSchema);
