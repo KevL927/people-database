@@ -9,13 +9,25 @@ class StepOne extends Component {
     this.props.dispatch(actions.fetchPeopleDatabase());
   }
 
-  renderResponse() {
-    if(this.props.people) {
+  renderServerStatusResponse() {
+    if(this.props.serverStatusResponse) {
       return (
         <div>
           <h4>Status Code:</h4>
+          <p>{this.props.serverStatusResponse.statusCode} - {this.props.serverStatusResponse.statusText}</p>
+        </div>
+      )
+    } else {
+      return null;
+    }
+  }
+
+  renderJSONResponse() {
+    if(this.props.people) {
+      return (
+        <div>
           <h4>JSON:</h4>
-          {JSON.stringify(this.props.people)}
+          <pre>{JSON.stringify(this.props.people, null, 2)}</pre>
         </div>
       )
     } else {
@@ -30,8 +42,9 @@ class StepOne extends Component {
           <h4>Sending a GET request to '/people' endpoint</h4>
         </div>
         <div>
-          <h4>Response from the server:</h4>
-          {this.renderResponse()}
+          <h2>Response from the server:</h2>
+          {this.renderServerStatusResponse()}
+          {this.renderJSONResponse()}
         </div>
       </div>
     )
@@ -39,6 +52,6 @@ class StepOne extends Component {
 }
 
 export default connect(
-  ({ people }) =>
-  ({ people })
+  ({ people, serverStatusResponse }) =>
+  ({ people, serverStatusResponse })
 )(StepOne);
