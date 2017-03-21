@@ -1,5 +1,13 @@
 import fetch from 'isomorphic-fetch';
 
+export const SERVER_STATUS_RESPONSE = 'SERVER_STATUS_RESPONSE';
+export const serverStatusResponse = (statusCode, statusText) => {
+    return {
+        type: SERVER_STATUS_RESPONSE,
+        payload: {statusCode, statusText}
+    };
+}
+
 export const FETCH_PEOPLEDATABASE_SUCCESS = 'FETCH_PEOPLEDATABASE_SUCCESS';
 export const fetchPeopleDatabaseSuccess = peopleArray => {
     return {
@@ -19,9 +27,10 @@ export const fetchPeopleDatabaseError = error => {
 const FETCH_PEOPLEDATABASE = 'FETCH_PEOPLE_DATABASE';
 export const fetchPeopleDatabase = () => {
   return (dispatch) => {
-  	return fetch('https://people-database.herokuapp.com/people')
+  	return fetch('http://localhost:3000/people')
   	.then(response => response.json().then(json => ({ json, response })))
   	.then(({json, response}) => {
+      dispatch(serverStatusResponse(response.status, response.statusText));
   		if (response.ok === false) {
   		  return Promise.reject(json);
   		}
@@ -53,7 +62,7 @@ export const fetchSpecificPersonDataError = error => {
 const FETCH_SPECIFIC_PERSON_DATA = 'FETCH_SPECIFIC_PERSON_DATA';
 export const fetchSpecificPersonData = personId => {
   return (dispatch, getState) => {
-  	return fetch('https://people-database.herokuapp.com/people' + personId)
+  	return fetch('http://localhost:3000/people' + personId)
   	.then(response => response.json().then(json => ({ json, response })))
   	.then(({json, response}) => {
   		if (response.ok === false) {
@@ -87,7 +96,7 @@ export const postPersonDataError = error => {
 const POST_PERSON_DATA = 'POST_PERSON_DATA';
 export const postPersonData = (name, favoriteCity) => {
   return (dispatch) => {
-  	return fetch('https://people-database.herokuapp.com/people',
+  	return fetch('http://localhost:3000/people',
       {
         headers: {
           'Accept': 'application/json',
@@ -127,7 +136,7 @@ export const putPersonDataError = error => {
 const PUT_PERSON_DATA = 'PUT_PERSON_DATA';
 export const putPersonData = (personId, name, favoriteCity) => {
   return (dispatch) => {
-  	return fetch('https://people-database.herokuapp.com/people',
+  	return fetch('http://localhost:3000/people',
       {
         headers: {
           'Accept': 'application/json',
@@ -168,7 +177,7 @@ export const deletePersonDataError = error => {
 const DELETE_PERSON_DATA = 'DELETE_PERSON_DATA';
 export const deletePersonData = (personId) => {
   return (dispatch) => {
-  	return fetch('https://people-database.herokuapp.com/people/' + personId,
+  	return fetch('http://localhost:3000/people/' + personId,
       {
         method: 'DELETE',
       }

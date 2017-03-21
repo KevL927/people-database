@@ -4,12 +4,19 @@ const initialState = {
 	people: null,
 	message: null,
 	error: null,
+	serverStatusResponse: null
 }
 
 export default (state, action) => {
    state = state || initialState;
 
     switch(action.type) {
+
+			case 'SERVER_STATUS_RESPONSE':
+				return Object.assign({}, state, {
+					serverStatusResponse: action.payload
+				});
+
         case 'FETCH_PEOPLEDATABASE_SUCCESS':
           return Object.assign({}, state, {
             people: action.payload
