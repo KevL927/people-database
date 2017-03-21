@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 export default () => {
   return (
     <div className="container">
-      <h2>People's Database</h2>
-      <h4>Find Out About People</h4>
+      <h1>People's Database</h1>
+      <h2>NYC Tech Talent Pipeline - Coding Challenge</h2>
     </div>
   );
 }
