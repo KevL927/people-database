@@ -9,7 +9,11 @@ peopleRouter.get('/', function(req, res) {
     if (err) {
       return res.status(err);
     }
-    return res.status(200).json(people);
+    return res.status(200).json({
+      people: people.map(
+        person => person.apiRepr()
+      )
+    });
   });
 });
 
@@ -21,7 +25,11 @@ peopleRouter.get('/:peopleId', function(req, res) {
       if (err) {
         return res.status(err);
       }
-      return res.status(200).json(people);
+      return res.status(200).json({
+        people: people.map(
+          person => person.apiRepr()
+        )
+      });
     });
   } else {
       return res.sendStatus(404);
