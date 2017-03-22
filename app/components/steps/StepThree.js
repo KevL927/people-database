@@ -7,12 +7,11 @@ import RenderStep from '../RenderStep';
 
 class StepThree extends Component {
   componentDidMount() {
-    this.props.dispatch(actions.resetToInitialState());
+    this.props.dispatch(actions.resetPeopleMessageErrorServerStatusResponse());
     this.props.dispatch(actions.fetchPeopleDatabase());
   }
 
   render() {
-    console.log(this.props.people)
     return (
       <div>
         <RenderStep
@@ -20,6 +19,7 @@ class StepThree extends Component {
           peopleObject={this.props.people}
           serverStatusResponse={this.props.serverStatusResponse}
         />
+        <Link to="/stepfour">Next ></Link>
       </div>
     )
   }
