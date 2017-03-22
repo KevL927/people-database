@@ -12,6 +12,9 @@ export default (state, action) => {
 	state = state || initialState;
 
   switch(action.type) {
+		case 'CLEAR_STATE':
+			return Object.assign({}, state, initialState);
+
     case 'RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE':
       return Object.assign({}, state, {
 				people: null,
