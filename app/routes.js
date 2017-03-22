@@ -8,6 +8,7 @@ import StepTwo from './components/steps/StepTwo';
 import StepThree from './components/steps/StepThree';
 import StepFour from './components/steps/StepFour';
 import StepFive from './components/steps/StepFive';
+import StepSix from './components/steps/StepSix';
 
 export default (
     <Router history={browserHistory}>
@@ -18,6 +19,7 @@ export default (
           <Route path="/stepthree" component={StepThree} />
           <Route path="/stepfour" component={StepFour} />
           <Route path="/stepfive" component={StepFive} />
+          <Route path="/stepsix" component={StepSix} />
         </Route>
     </Router>
 );
