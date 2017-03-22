@@ -9,7 +9,11 @@ peopleRouter.get('/', function(req, res) {
     if (err) {
       return res.status(err);
     }
-    return res.status(200).json(people);
+    return res.status(200).json({
+      people: people.map(
+        person => person.apiRepr()
+      )
+    });
   });
 });
 
@@ -18,10 +22,15 @@ peopleRouter.get('/:peopleId', function(req, res) {
 
   if (peopleId.match(/^[0-9a-fA-F]{24}$/)) {
     People.findById(peopleId, function(err, people) {
+      let peopleArray = [people];
       if (err) {
         return res.status(err);
       }
-      return res.status(200).json(people);
+      return res.status(200).json({
+        people: peopleArray.map(
+          person => person.apiRepr()
+        )
+      });
     });
   } else {
       return res.sendStatus(404);
@@ -32,36 +41,45 @@ peopleRouter.post('/', function(req, res) {
   var name = req.body.name;
   var favoriteCity = req.body.favoriteCity;
 
-  People.create({ name: name, favoriteCity: favoriteCity }, function(err, people) {
-    if (name === undefined || favoriteCity === undefined) {
-      return res.status(422).json({error: 'Missing field'});
+  People.create({ name: name, favoriteCity: favoriteCity },
+    function(err, people) {
+      let peopleArray = [people];
+      if (name === undefined || favoriteCity === undefined) {
+        return res.status(422).json({error: 'Missing field'});
+      } else if (err) {
+          return res.sendStatus(500);
+      }
+      return res.status(201).json({
+        message: 'User Created Successfully',
+        people: peopleArray.map(
+          person => person.apiRepr()
+        )
+      });
     }
-    else if (err && err.errmsg.slice(0,6) === 'E11000') {
-      return res.status(409).json({error: 'User already exists'});
-    }
-    else if (err) {
-      return res.sendStatus(500);
-    }
-    return res.status(201).json({message: 'User created successfully'});
-  })
+  )
 });
 
 peopleRouter.put('/', function(req, res) {
-  var peopleId = req.body._id;
-  var name = req.body.name;
+  var peopleId = req.body.id;
   var favoriteCity = req.body.favoriteCity;
 
-  if (peopleId.match(/^[0-9a-fA-F]{24}$/) && name && favoriteCity) {
-    People.findByIdAndUpdate(peopleId, { name: name, favoriteCity: favoriteCity }, { new: true },
+  if (peopleId.match(/^[0-9a-fA-F]{24}$/) && favoriteCity) {
+    People.findByIdAndUpdate(peopleId, { favoriteCity: favoriteCity }, { new: true },
       function(err, people) {
+        let peopleArray = [people];
         if (err) {
           return res.sendStatus(500);
         }
-        return res.status(201).json({message: 'User updated successfully'});
+        return res.status(201).json({
+          message: 'Favorite City updated successfully',
+          people: peopleArray.map(
+          person => person.apiRepr()
+          )
+        });
       }
     )
-  } else {
-  return res.sendStatus(404);
+  }else {
+    return res.sendStatus(404);
   }
 });
 

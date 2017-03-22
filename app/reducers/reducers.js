@@ -4,73 +4,85 @@ const initialState = {
 	people: null,
 	message: null,
 	error: null,
+	postPutReturnedObjectId: null,
+	serverStatusResponse: null
 }
 
 export default (state, action) => {
-   state = state || initialState;
+	state = state || initialState;
 
-    switch(action.type) {
-        case 'FETCH_PEOPLEDATABASE_SUCCESS':
-          return Object.assign({}, state, {
-            people: action.payload
-          });
+  switch(action.type) {
+		case 'CLEAR_STATE':
+			return Object.assign({}, state, initialState);
 
-        case 'FETCH_PEOPLEDATABASE_ERROR':
-          return Object.assign({}, state, {
-              error: action.payload
-          });
+    case 'RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE':
+      return Object.assign({}, state, {
+				people: null,
+				message: null,
+				error: null,
+				serverStatusResponse: null
+			});
 
-				case 'FETCH_SPECIFIC_PERSON_DATA_SUCCESS':
-					let personIndexLocation = action.payload[1].findIndex(person => person._id === action.payload[0]._id);
+    case 'SERVER_STATUS_RESPONSE':
+      return Object.assign({}, state, {
+	serverStatusResponse: action.payload
+      });
 
-					let newPeopleArray = [
-						...action.payload[1].slice(0, personIndexLocation),
-						action.payload[0],
-						...action.payload[1].slice(personIndexLocation+1)
-					];
+    case 'FETCH_PEOPLEDATABASE_SUCCESS':
+      return Object.assign({}, state, {
+        people: action.payload
+      });
 
-					let updatePeopleArray = update(action.payload[1], {$set: newPeopleArray});
+    case 'FETCH_PEOPLEDATABASE_ERROR':
+      return Object.assign({}, state, {
+          error: action.payload
+      });
 
-					return Object.assign({}, state, {
-							people: updatePeopleArray
-					});
+    case 'FETCH_SPECIFIC_PERSON_DATA_SUCCESS':
+      return Object.assign({}, state, {
+				people: action.payload.people[0]
+      });
 
-				case 'FETCH_SPECIFIC_PERSON_DATA_ERROR':
-					return Object.assign({}, state, {
-							error: action.payload
-					});
+    case 'FETCH_SPECIFIC_PERSON_DATA_ERROR':
+      return Object.assign({}, state, {
+				error: action.payload.error
+    });
 
-				case 'POST_PERSON_DATA_SUCCESS':
-				    return Object.assign({}, state, {
-				        message: action.payload
-				    });
+    case 'POST_PERSON_DATA_SUCCESS':
+      return Object.assign({}, state, {
+				message: action.payload.message,
+				people: action.payload.people[0],
+				postPutReturnedObjectId: action.payload.people[0].id
+      });
 
-			  case 'POST_PERSON_DATA_ERROR':
-			    return Object.assign({}, state, {
-			        error: action.payload
-			    });
+    case 'POST_PERSON_DATA_ERROR':
+      return Object.assign({}, state, {
+				error: action.payload.error
+      });
 
-			  case 'PUT_PERSON_DATA_SUCCESS':
-			    return Object.assign({}, state, {
-			        message: action.payload.message
-			    });
+    case 'PUT_PERSON_DATA_SUCCESS':
+      return Object.assign({}, state, {
+				message: action.payload.message,
+				people: action.payload.people[0],
+				postPutReturnedObjectId: action.payload.people[0].id
+      });
 
-			  case 'PUT_PERSON_DATA_ERROR':
-			    return Object.assign({}, state, {
-			        error: action.payload
-			    });
+    case 'PUT_PERSON_DATA_ERROR':
+      return Object.assign({}, state, {
+				error: action.payload.error
+      });
 
-				case 'DELETE_PERSON_DATA_SUCCESS':
-			    return Object.assign({}, state, {
-			        message: action.payload
-			    });
+    case 'DELETE_PERSON_DATA_SUCCESS':
+      return Object.assign({}, state, {
+				message: action.payload.message
+      });
 
-			  case 'DELETE_PERSON_DATA_ERROR':
-			    return Object.assign({}, state, {
-			        error: action.payload
-			    });
+    case 'DELETE_PERSON_DATA_ERROR':
+      return Object.assign({}, state, {
+				error: action.payload.error
+      });
 
-        default:
-          return state;
-    }
+    default:
+      return state;
+  }
 }

@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 export default () => {
   return (
     <div className="container">
-      <Link to="/databaselist">Load Database</Link>
+      <Link to="/stepone">Begin</Link>
     </div>
   );
 }
