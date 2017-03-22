@@ -8689,9 +8689,9 @@ exports.default = App;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.deletePersonData = exports.deletePersonDataError = exports.DELETE_PERSON_DATA_ERROR = exports.deletePersonDataSuccess = exports.DELETE_PERSON_DATA_SUCCESS = exports.putPersonData = exports.putPersonDataError = exports.PUT_PERSON_DATA_ERROR = exports.putPersonDataSuccess = exports.PUT_PERSON_DATA_SUCCESS = exports.postPersonData = exports.postPersonDataError = exports.POST_PERSON_DATA_ERROR = exports.postPersonDataSuccess = exports.POST_PERSON_DATA_SUCCESS = exports.fetchSpecificPersonData = exports.fetchSpecificPersonDataError = exports.FETCH_SPECIFIC_PERSON_DATA_ERROR = exports.fetchSpecificPersonDataSuccess = exports.FETCH_SPECIFIC_PERSON_DATA_SUCCESS = exports.fetchPeopleDatabase = exports.fetchPeopleDatabaseError = exports.FETCH_PEOPLEDATABASE_ERROR = exports.fetchPeopleDatabaseSuccess = exports.FETCH_PEOPLEDATABASE_SUCCESS = undefined;
+exports.deletePersonData = exports.deletePersonDataError = exports.DELETE_PERSON_DATA_ERROR = exports.deletePersonDataSuccess = exports.DELETE_PERSON_DATA_SUCCESS = exports.putPersonData = exports.putPersonDataError = exports.PUT_PERSON_DATA_ERROR = exports.putPersonDataSuccess = exports.PUT_PERSON_DATA_SUCCESS = exports.postPersonData = exports.postPersonDataError = exports.POST_PERSON_DATA_ERROR = exports.postPersonDataSuccess = exports.POST_PERSON_DATA_SUCCESS = exports.fetchSpecificPersonData = exports.fetchSpecificPersonDataError = exports.FETCH_SPECIFIC_PERSON_DATA_ERROR = exports.fetchSpecificPersonDataSuccess = exports.FETCH_SPECIFIC_PERSON_DATA_SUCCESS = exports.fetchPeopleDatabase = exports.fetchPeopleDatabaseError = exports.FETCH_PEOPLEDATABASE_ERROR = exports.fetchPeopleDatabaseSuccess = exports.FETCH_PEOPLEDATABASE_SUCCESS = exports.serverStatusResponse = exports.SERVER_STATUS_RESPONSE = exports.resetPeopleMessageErrorServerStatusResponse = exports.RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE = exports.clearState = exports.CLEAR_STATE = undefined;
 
 var _isomorphicFetch = __webpack_require__(150);
 
@@ -8699,189 +8699,241 @@ var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var CLEAR_STATE = exports.CLEAR_STATE = 'CLEAR_STATE';
+var clearState = exports.clearState = function clearState() {
+  return {
+    type: CLEAR_STATE
+  };
+};
+
+var RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE = exports.RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE = 'RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE';
+var resetPeopleMessageErrorServerStatusResponse = exports.resetPeopleMessageErrorServerStatusResponse = function resetPeopleMessageErrorServerStatusResponse() {
+  return {
+    type: RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE
+  };
+};
+
+var SERVER_STATUS_RESPONSE = exports.SERVER_STATUS_RESPONSE = 'SERVER_STATUS_RESPONSE';
+var serverStatusResponse = exports.serverStatusResponse = function serverStatusResponse(statusCode, statusText) {
+  return {
+    type: SERVER_STATUS_RESPONSE,
+    payload: { statusCode: statusCode, statusText: statusText }
+  };
+};
+
 var FETCH_PEOPLEDATABASE_SUCCESS = exports.FETCH_PEOPLEDATABASE_SUCCESS = 'FETCH_PEOPLEDATABASE_SUCCESS';
 var fetchPeopleDatabaseSuccess = exports.fetchPeopleDatabaseSuccess = function fetchPeopleDatabaseSuccess(peopleArray) {
-    return {
-        type: FETCH_PEOPLEDATABASE_SUCCESS,
-        payload: peopleArray
-    };
+  return {
+    type: FETCH_PEOPLEDATABASE_SUCCESS,
+    payload: peopleArray
+  };
 };
 
 var FETCH_PEOPLEDATABASE_ERROR = exports.FETCH_PEOPLEDATABASE_ERROR = 'FETCH_PEOPLEDATABASE_ERROR';
 var fetchPeopleDatabaseError = exports.fetchPeopleDatabaseError = function fetchPeopleDatabaseError(error) {
-    return {
-        type: FETCH_PEOPLEDATABASE_ERROR,
-        payload: error
-    };
+  return {
+    type: FETCH_PEOPLEDATABASE_ERROR,
+    payload: error
+  };
 };
 
 var FETCH_PEOPLEDATABASE = 'FETCH_PEOPLE_DATABASE';
 var fetchPeopleDatabase = exports.fetchPeopleDatabase = function fetchPeopleDatabase() {
-    return function (dispatch) {
-        return (0, _isomorphicFetch2.default)('https://people-database.herokuapp.com/people').then(function (response) {
-            return response.json().then(function (json) {
-                return { json: json, response: response };
-            });
-        }).then(function (_ref) {
-            var json = _ref.json,
-                response = _ref.response;
+  return function (dispatch) {
+    return (0, _isomorphicFetch2.default)('http://localhost:3000/people').then(function (response) {
+      return response.json().then(function (json) {
+        return { json: json, response: response };
+      });
+    }).then(function (_ref) {
+      var json = _ref.json,
+          response = _ref.response;
 
-            if (response.ok === false) {
-                return Promise.reject(json);
-            }
-            return json;
-        }).then(function (data) {
-            return dispatch(fetchPeopleDatabaseSuccess(data));
-        }).catch(function (err) {
-            return dispatch(fetchPeopleDatabaseError(err));
-        });
-    };
+      dispatch(serverStatusResponse(response.status, response.statusText));
+      if (response.ok === false) {
+        return Promise.reject(json);
+      }
+      return json;
+    }).then(function (data) {
+      return dispatch(fetchPeopleDatabaseSuccess(data));
+    }).catch(function (err) {
+      return dispatch(fetchPeopleDatabaseError(err));
+    });
+  };
 };
 
 var FETCH_SPECIFIC_PERSON_DATA_SUCCESS = exports.FETCH_SPECIFIC_PERSON_DATA_SUCCESS = 'FETCH_SPECIFIC_PERSON_DATA_SUCCESS';
-var fetchSpecificPersonDataSuccess = exports.fetchSpecificPersonDataSuccess = function fetchSpecificPersonDataSuccess(personArray, currentPeopleArray) {
-    return {
-        type: FETCH_SPECIFIC_PERSON_DATA_SUCCESS,
-        payload: [personArray, currentPeopleArray]
-    };
+var fetchSpecificPersonDataSuccess = exports.fetchSpecificPersonDataSuccess = function fetchSpecificPersonDataSuccess(personArray) {
+  return {
+    type: FETCH_SPECIFIC_PERSON_DATA_SUCCESS,
+    payload: personArray
+  };
 };
 
 var FETCH_SPECIFIC_PERSON_DATA_ERROR = exports.FETCH_SPECIFIC_PERSON_DATA_ERROR = 'FETCH_SPECIFIC_PERSON_DATA_ERROR';
 var fetchSpecificPersonDataError = exports.fetchSpecificPersonDataError = function fetchSpecificPersonDataError(error) {
-    return {
-        type: FETCH_SPECIFIC_PERSON_DATA_ERROR,
-        payload: error
-    };
+  return {
+    type: FETCH_SPECIFIC_PERSON_DATA_ERROR,
+    payload: error
+  };
 };
 
 var FETCH_SPECIFIC_PERSON_DATA = 'FETCH_SPECIFIC_PERSON_DATA';
 var fetchSpecificPersonData = exports.fetchSpecificPersonData = function fetchSpecificPersonData(personId) {
-    return function (dispatch, getState) {
-        return (0, _isomorphicFetch2.default)('https://people-database.herokuapp.com/people' + personId).then(function (response) {
-            return response.json().then(function (json) {
-                return { json: json, response: response };
-            });
-        }).then(function (_ref2) {
-            var json = _ref2.json,
-                response = _ref2.response;
+  return function (dispatch) {
+    return (0, _isomorphicFetch2.default)('http://localhost:3000/people/' + personId).then(function (response) {
+      return response.json().then(function (json) {
+        return { json: json, response: response };
+      });
+    }).then(function (_ref2) {
+      var json = _ref2.json,
+          response = _ref2.response;
 
-            if (response.ok === false) {
-                return Promise.reject(json);
-            }
-            return json;
-        }).then(function (data) {
-            dispatch(fetchSpecificPersonDataSuccess(data, getState().people));
-        }).catch(function (err) {
-            return dispatch(fetchSpecificPersonDataError(err));
-        });
-    };
+      if (response.ok === false) {
+        return Promise.reject(json);
+      }
+      return json;
+    }).then(function (data) {
+      return dispatch(fetchSpecificPersonDataSuccess(data));
+    }).catch(function (err) {
+      return dispatch(fetchSpecificPersonDataError(err));
+    });
+  };
 };
 
 var POST_PERSON_DATA_SUCCESS = exports.POST_PERSON_DATA_SUCCESS = 'POST_PERSON_DATA_SUCCESS';
-var postPersonDataSuccess = exports.postPersonDataSuccess = function postPersonDataSuccess(successMessage) {
-    return {
-        type: POST_PERSON_DATA_SUCCESS,
-        payload: successMessage
-    };
+var postPersonDataSuccess = exports.postPersonDataSuccess = function postPersonDataSuccess(successMessageAndObject) {
+  return {
+    type: POST_PERSON_DATA_SUCCESS,
+    payload: successMessageAndObject
+  };
 };
 
 var POST_PERSON_DATA_ERROR = exports.POST_PERSON_DATA_ERROR = 'POST_PERSON_DATA_ERROR';
 var postPersonDataError = exports.postPersonDataError = function postPersonDataError(error) {
-    return {
-        type: POST_PERSON_DATA_ERROR,
-        payload: error
-    };
+  return {
+    type: POST_PERSON_DATA_ERROR,
+    payload: error
+  };
 };
 
 var POST_PERSON_DATA = 'POST_PERSON_DATA';
 var postPersonData = exports.postPersonData = function postPersonData(name, favoriteCity) {
-    return function (dispatch) {
-        return (0, _isomorphicFetch2.default)('https://people-database.herokuapp.com/people', {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({ name: name, favoriteCity: favoriteCity })
-        }).then(function (res) {
-            return res.json();
-        }).then(function (data) {
-            dispatch(postPersonDataSuccess(data));
-            dispatch(fetchPeopleDatabase());
-        }).catch(function (err) {
-            return dispatch(postPersonDataError(err));
-        });
-    };
+  return function (dispatch) {
+    return (0, _isomorphicFetch2.default)('http://localhost:3000/people', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({ name: name, favoriteCity: favoriteCity })
+    }).then(function (response) {
+      return response.json().then(function (json) {
+        return { json: json, response: response };
+      });
+    }).then(function (_ref3) {
+      var json = _ref3.json,
+          response = _ref3.response;
+
+      dispatch(serverStatusResponse(response.status, response.statusText));
+      if (response.ok === false) {
+        return Promise.reject(json);
+      }
+      return json;
+    }).then(function (data) {
+      return dispatch(postPersonDataSuccess(data));
+    }).catch(function (err) {
+      return dispatch(postPersonDataError(err));
+    });
+  };
 };
 
 var PUT_PERSON_DATA_SUCCESS = exports.PUT_PERSON_DATA_SUCCESS = 'PUT_PERSON_DATA_SUCCESS';
-var putPersonDataSuccess = exports.putPersonDataSuccess = function putPersonDataSuccess(successMessage) {
-    return {
-        type: PUT_PERSON_DATA_SUCCESS,
-        payload: successMessage
-    };
+var putPersonDataSuccess = exports.putPersonDataSuccess = function putPersonDataSuccess(successMessageAndObject) {
+  return {
+    type: PUT_PERSON_DATA_SUCCESS,
+    payload: successMessageAndObject
+  };
 };
 
 var PUT_PERSON_DATA_ERROR = exports.PUT_PERSON_DATA_ERROR = 'PUT_PERSON_DATA_ERROR';
 var putPersonDataError = exports.putPersonDataError = function putPersonDataError(error) {
-    return {
-        type: PUT_PERSON_DATA_ERROR,
-        payload: error
-    };
+  return {
+    type: PUT_PERSON_DATA_ERROR,
+    payload: error
+  };
 };
 
 var PUT_PERSON_DATA = 'PUT_PERSON_DATA';
-var putPersonData = exports.putPersonData = function putPersonData(personId, name, favoriteCity) {
-    return function (dispatch) {
-        return (0, _isomorphicFetch2.default)('https://people-database.herokuapp.com/people', {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'PUT',
-            body: JSON.stringify({ _id: personId, name: name, favoriteCity: favoriteCity })
-        }).then(function (res) {
-            return res.json();
-        }).then(function (data) {
-            console.log(data);
-            dispatch(putPersonDataSuccess(data));
-            dispatch(fetchSpecificPersonData(personId));
-        }).catch(function (err) {
-            return dispatch(putPersonDataError(err));
-        });
-    };
+var putPersonData = exports.putPersonData = function putPersonData(personId, favoriteCity) {
+  return function (dispatch) {
+    return (0, _isomorphicFetch2.default)('http://localhost:3000/people', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'PUT',
+      body: JSON.stringify({ id: personId, favoriteCity: favoriteCity })
+    }).then(function (response) {
+      return response.json().then(function (json) {
+        return { json: json, response: response };
+      });
+    }).then(function (_ref4) {
+      var json = _ref4.json,
+          response = _ref4.response;
+
+      dispatch(serverStatusResponse(response.status, response.statusText));
+      if (response.ok === false) {
+        return Promise.reject(json);
+      }
+      return json;
+    }).then(function (data) {
+      return dispatch(putPersonDataSuccess(data));
+    }).catch(function (err) {
+      return dispatch(putPersonDataError(err));
+    });
+  };
 };
 
 var DELETE_PERSON_DATA_SUCCESS = exports.DELETE_PERSON_DATA_SUCCESS = 'DELETE_PERSON_DATA_SUCCESS';
 var deletePersonDataSuccess = exports.deletePersonDataSuccess = function deletePersonDataSuccess(successMessage) {
-    return {
-        type: DELETE_PERSON_DATA_SUCCESS,
-        payload: successMessage
-    };
+  return {
+    type: DELETE_PERSON_DATA_SUCCESS,
+    payload: successMessage
+  };
 };
 
 var DELETE_PERSON_DATA_ERROR = exports.DELETE_PERSON_DATA_ERROR = 'DELETE_PERSON_DATA_ERROR';
 var deletePersonDataError = exports.deletePersonDataError = function deletePersonDataError(error) {
-    return {
-        type: DELETE_PERSON_DATA_ERROR,
-        payload: error
-    };
+  return {
+    type: DELETE_PERSON_DATA_ERROR,
+    payload: error
+  };
 };
 
 var DELETE_PERSON_DATA = 'DELETE_PERSON_DATA';
 var deletePersonData = exports.deletePersonData = function deletePersonData(personId) {
-    return function (dispatch) {
-        return (0, _isomorphicFetch2.default)('https://people-database.herokuapp.com/people/' + personId, {
-            method: 'DELETE'
-        }).then(function (res) {
-            return res.json();
-        }).then(function (data) {
-            dispatch(deletePersonDataSuccess(data));
-            dispatch(fetchPeopleDatabase());
-        }).catch(function (err) {
-            return dispatch(deletePersonDataError(err));
-        });
-    };
+  return function (dispatch) {
+    return (0, _isomorphicFetch2.default)('http://localhost:3000/people/' + personId, {
+      method: 'DELETE'
+    }).then(function (response) {
+      return response.json().then(function (json) {
+        return { json: json, response: response };
+      });
+    }).then(function (_ref5) {
+      var json = _ref5.json,
+          response = _ref5.response;
+
+      dispatch(serverStatusResponse(response.status, response.statusText));
+      if (response.ok === false) {
+        return Promise.reject(json);
+      }
+      return json;
+    }).then(function (data) {
+      return dispatch(deletePersonDataSuccess(data));
+    }).catch(function (err) {
+      return dispatch(deletePersonDataError(err));
+    });
+  };
 };
 
 /***/ }),
@@ -13683,9 +13735,33 @@ var _Home = __webpack_require__(131);
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _DatabaseList = __webpack_require__(129);
+var _StepOne = __webpack_require__(288);
 
-var _DatabaseList2 = _interopRequireDefault(_DatabaseList);
+var _StepOne2 = _interopRequireDefault(_StepOne);
+
+var _StepTwo = __webpack_require__(290);
+
+var _StepTwo2 = _interopRequireDefault(_StepTwo);
+
+var _StepThree = __webpack_require__(289);
+
+var _StepThree2 = _interopRequireDefault(_StepThree);
+
+var _StepFour = __webpack_require__(287);
+
+var _StepFour2 = _interopRequireDefault(_StepFour);
+
+var _StepFive = __webpack_require__(291);
+
+var _StepFive2 = _interopRequireDefault(_StepFive);
+
+var _StepSix = __webpack_require__(293);
+
+var _StepSix2 = _interopRequireDefault(_StepSix);
+
+var _StepSeven = __webpack_require__(292);
+
+var _StepSeven2 = _interopRequireDefault(_StepSeven);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13696,7 +13772,13 @@ exports.default = _react2.default.createElement(
         _reactRouter.Route,
         { path: '/', component: _App2.default },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/databaselist', component: _DatabaseList2.default })
+        _react2.default.createElement(_reactRouter.Route, { path: '/stepone', component: _StepOne2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/steptwo', component: _StepTwo2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/stepthree', component: _StepThree2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/stepfour', component: _StepFour2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/stepfive', component: _StepFive2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/stepsix', component: _StepSix2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/stepseven', component: _StepSeven2.default })
     )
 );
 
@@ -13735,167 +13817,7 @@ exports.default = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMi
 module.exports = __webpack_require__(174);
 
 /***/ }),
-/* 129 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(42);
-
-var _actions = __webpack_require__(76);
-
-var actions = _interopRequireWildcard(_actions);
-
-var _PersonObject = __webpack_require__(134);
-
-var _PersonObject2 = _interopRequireDefault(_PersonObject);
-
-var _AddButton = __webpack_require__(132);
-
-var _AddButton2 = _interopRequireDefault(_AddButton);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var DatabaseList = function (_Component) {
-  _inherits(DatabaseList, _Component);
-
-  _createClass(DatabaseList, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.props.dispatch(actions.fetchPeopleDatabase());
-    }
-  }]);
-
-  function DatabaseList(props) {
-    _classCallCheck(this, DatabaseList);
-
-    var _this = _possibleConstructorReturn(this, (DatabaseList.__proto__ || Object.getPrototypeOf(DatabaseList)).call(this, props));
-
-    _this.state = { showEditInput: false, personId: null, name: null, favoriteCity: null };
-    return _this;
-  }
-
-  _createClass(DatabaseList, [{
-    key: 'handleChange',
-    value: function handleChange() {
-      this.setState({ name: this.refs.nameInput.value, favoriteCity: this.refs.favoriteCityInput.value });
-    }
-  }, {
-    key: 'showEditForm',
-    value: function showEditForm(personId, name, favoriteCity) {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'form',
-          { onSubmit: this.onClickEditPersonData.bind(this) },
-          _react2.default.createElement(
-            'label',
-            null,
-            'Name:',
-            _react2.default.createElement('input', { type: 'text', ref: 'nameInput', placeholder: this.state.name, onChange: this.handleChange.bind(this) })
-          ),
-          _react2.default.createElement(
-            'label',
-            null,
-            'Favorite City:',
-            _react2.default.createElement('input', { type: 'text', ref: 'favoriteCityInput', placeholder: this.state.favoriteCity, onChange: this.handleChange.bind(this) })
-          ),
-          _react2.default.createElement('input', { type: 'submit', value: 'Edit' })
-        )
-      );
-    }
-  }, {
-    key: 'onClickEditPersonData',
-    value: function onClickEditPersonData(event) {
-      event.preventDefault();
-      this.props.dispatch(actions.putPersonData(this.state.personId, this.state.name, this.state.favoriteCity));
-    }
-  }, {
-    key: 'onClickEdit',
-    value: function onClickEdit(event, personId, name, favoriteCity) {
-      event.preventDefault();
-      this.setState({ showEditInput: !this.state.showInput, personId: personId, name: name, favoriteCity: favoriteCity });
-      this.showEditForm(personId, name, favoriteCity);
-      this.refs.nameInput.value = '';
-      this.refs.favoriteCityInput.value = '';
-    }
-  }, {
-    key: 'onClickDeletePersonData',
-    value: function onClickDeletePersonData(event, personId) {
-      event.preventDefault();
-      this.props.dispatch(actions.deletePersonData(personId));
-    }
-  }, {
-    key: 'renderChildComponents',
-    value: function renderChildComponents() {
-      if (this.props.people) {
-        return _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(_PersonObject2.default, {
-            peopleObject: this.props.people,
-            onClickDeletePersonData: this.onClickDeletePersonData.bind(this),
-            onClickEdit: this.onClickEdit.bind(this)
-          })
-        );
-      } else {
-        return _react2.default.createElement(
-          'div',
-          null,
-          'No person in database'
-        );
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'container' },
-        _react2.default.createElement(
-          'div',
-          null,
-          this.renderChildComponents()
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(_AddButton2.default, null)
-        ),
-        this.state.showEditInput ? this.showEditForm() : null
-      );
-    }
-  }]);
-
-  return DatabaseList;
-}(_react.Component);
-
-exports.default = (0, _reactRedux.connect)(function (_ref) {
-  var people = _ref.people;
-  return { people: people };
-})(DatabaseList);
-
-/***/ }),
+/* 129 */,
 /* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13919,14 +13841,14 @@ exports.default = function () {
     'div',
     { className: 'container' },
     _react2.default.createElement(
-      'h2',
+      'h1',
       null,
       'People\'s Database'
     ),
     _react2.default.createElement(
-      'h4',
+      'h2',
       null,
-      'Find Out About People'
+      'NYC Tech Talent Pipeline - Coding Challenge'
     )
   );
 };
@@ -13956,207 +13878,16 @@ exports.default = function () {
     { className: 'container' },
     _react2.default.createElement(
       _reactRouter.Link,
-      { to: '/databaselist' },
-      'Load Database'
+      { to: '/stepone' },
+      'Begin'
     )
   );
 };
 
 /***/ }),
-/* 132 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(42);
-
-var _actions = __webpack_require__(76);
-
-var actions = _interopRequireWildcard(_actions);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AddButton = function (_Component) {
-  _inherits(AddButton, _Component);
-
-  function AddButton(props) {
-    _classCallCheck(this, AddButton);
-
-    var _this = _possibleConstructorReturn(this, (AddButton.__proto__ || Object.getPrototypeOf(AddButton)).call(this, props));
-
-    _this.state = { showInput: false };
-    return _this;
-  }
-
-  _createClass(AddButton, [{
-    key: 'onClick',
-    value: function onClick() {
-      this.setState({ showInput: !this.state.showInput });
-    }
-  }, {
-    key: 'showForm',
-    value: function showForm() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'form',
-          { onSubmit: this.submitForm.bind(this) },
-          _react2.default.createElement(
-            'label',
-            null,
-            'Name:',
-            _react2.default.createElement('input', { type: 'text', ref: 'nameInput' })
-          ),
-          _react2.default.createElement(
-            'label',
-            null,
-            'Favorite City:',
-            _react2.default.createElement('input', { type: 'text', ref: 'favoriteCityInput' })
-          ),
-          _react2.default.createElement('input', { type: 'submit', value: 'Add' })
-        )
-      );
-    }
-  }, {
-    key: 'submitForm',
-    value: function submitForm(event) {
-      event.preventDefault();
-      this.props.dispatch(actions.postPersonData(this.refs.nameInput.value, this.refs.favoriteCityInput.value));
-      this.refs.nameInput.value = '';
-      this.refs.favoriteCityInput.value = '';
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'button',
-          { onClick: this.onClick.bind(this) },
-          'Add Person'
-        ),
-        this.state.showInput ? this.showForm() : null
-      );
-    }
-  }]);
-
-  return AddButton;
-}(_react.Component);
-
-;
-
-exports.default = (0, _reactRedux.connect)()(AddButton);
-
-/***/ }),
-/* 133 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (_ref) {
-  var personInfo = _ref.personInfo,
-      onClickDeletePersonData = _ref.onClickDeletePersonData,
-      onClickEdit = _ref.onClickEdit;
-
-  return _react2.default.createElement(
-    "div",
-    { className: "person-data" },
-    _react2.default.createElement(
-      "li",
-      null,
-      personInfo.name,
-      " - ",
-      personInfo.favoriteCity,
-      _react2.default.createElement(
-        "button",
-        { onClick: function onClick(event) {
-            return onClickDeletePersonData(event, personInfo._id);
-          } },
-        "Delete"
-      ),
-      _react2.default.createElement(
-        "button",
-        { onClick: function onClick(event) {
-            return onClickEdit(event, personInfo._id, personInfo.name, personInfo.favoriteCity);
-          } },
-        "Edit"
-      )
-    )
-  );
-};
-
-/***/ }),
-/* 134 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _PersonData = __webpack_require__(133);
-
-var _PersonData2 = _interopRequireDefault(_PersonData);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (_ref) {
-  var peopleObject = _ref.peopleObject,
-      onClickDeletePersonData = _ref.onClickDeletePersonData,
-      onClickEdit = _ref.onClickEdit;
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    peopleObject.map(function (info, index) {
-      return _react2.default.createElement(
-        'ul',
-        null,
-        _react2.default.createElement(_PersonData2.default, { key: index, personInfo: info, onClickDeletePersonData: onClickDeletePersonData, onClickEdit: onClickEdit })
-      );
-    })
-  );
-};
-
-/***/ }),
+/* 132 */,
+/* 133 */,
+/* 134 */,
 /* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14164,7 +13895,7 @@ exports.default = function (_ref) {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _reactAddonsUpdate = __webpack_require__(160);
@@ -14173,79 +13904,91 @@ var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 var initialState = {
-	people: null,
-	message: null,
-	error: null
+  people: null,
+  message: null,
+  error: null,
+  postPutReturnedObjectId: null,
+  serverStatusResponse: null
 };
 
 exports.default = function (state, action) {
-	state = state || initialState;
+  state = state || initialState;
 
-	switch (action.type) {
-		case 'FETCH_PEOPLEDATABASE_SUCCESS':
-			return Object.assign({}, state, {
-				people: action.payload
-			});
+  switch (action.type) {
+    case 'CLEAR_STATE':
+      return Object.assign({}, state, initialState);
 
-		case 'FETCH_PEOPLEDATABASE_ERROR':
-			return Object.assign({}, state, {
-				error: action.payload
-			});
+    case 'RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE':
+      return Object.assign({}, state, {
+        people: null,
+        message: null,
+        error: null,
+        serverStatusResponse: null
+      });
 
-		case 'FETCH_SPECIFIC_PERSON_DATA_SUCCESS':
-			var personIndexLocation = action.payload[1].findIndex(function (person) {
-				return person._id === action.payload[0]._id;
-			});
+    case 'SERVER_STATUS_RESPONSE':
+      return Object.assign({}, state, {
+        serverStatusResponse: action.payload
+      });
 
-			var newPeopleArray = [].concat(_toConsumableArray(action.payload[1].slice(0, personIndexLocation)), [action.payload[0]], _toConsumableArray(action.payload[1].slice(personIndexLocation + 1)));
+    case 'FETCH_PEOPLEDATABASE_SUCCESS':
+      return Object.assign({}, state, {
+        people: action.payload
+      });
 
-			var updatePeopleArray = (0, _reactAddonsUpdate2.default)(action.payload[1], { $set: newPeopleArray });
+    case 'FETCH_PEOPLEDATABASE_ERROR':
+      return Object.assign({}, state, {
+        error: action.payload
+      });
 
-			return Object.assign({}, state, {
-				people: updatePeopleArray
-			});
+    case 'FETCH_SPECIFIC_PERSON_DATA_SUCCESS':
+      return Object.assign({}, state, {
+        people: action.payload.people[0]
+      });
 
-		case 'FETCH_SPECIFIC_PERSON_DATA_ERROR':
-			return Object.assign({}, state, {
-				error: action.payload
-			});
+    case 'FETCH_SPECIFIC_PERSON_DATA_ERROR':
+      return Object.assign({}, state, {
+        error: action.payload.error
+      });
 
-		case 'POST_PERSON_DATA_SUCCESS':
-			return Object.assign({}, state, {
-				message: action.payload
-			});
+    case 'POST_PERSON_DATA_SUCCESS':
+      return Object.assign({}, state, {
+        message: action.payload.message,
+        people: action.payload.people[0],
+        postPutReturnedObjectId: action.payload.people[0].id
+      });
 
-		case 'POST_PERSON_DATA_ERROR':
-			return Object.assign({}, state, {
-				error: action.payload
-			});
+    case 'POST_PERSON_DATA_ERROR':
+      return Object.assign({}, state, {
+        error: action.payload.error
+      });
 
-		case 'PUT_PERSON_DATA_SUCCESS':
-			return Object.assign({}, state, {
-				message: action.payload.message
-			});
+    case 'PUT_PERSON_DATA_SUCCESS':
+      return Object.assign({}, state, {
+        message: action.payload.message,
+        people: action.payload.people[0],
+        postPutReturnedObjectId: action.payload.people[0].id
+      });
 
-		case 'PUT_PERSON_DATA_ERROR':
-			return Object.assign({}, state, {
-				error: action.payload
-			});
+    case 'PUT_PERSON_DATA_ERROR':
+      return Object.assign({}, state, {
+        error: action.payload.error
+      });
 
-		case 'DELETE_PERSON_DATA_SUCCESS':
-			return Object.assign({}, state, {
-				message: action.payload
-			});
+    case 'DELETE_PERSON_DATA_SUCCESS':
+      return Object.assign({}, state, {
+        message: action.payload.message
+      });
 
-		case 'DELETE_PERSON_DATA_ERROR':
-			return Object.assign({}, state, {
-				error: action.payload
-			});
+    case 'DELETE_PERSON_DATA_ERROR':
+      return Object.assign({}, state, {
+        error: action.payload.error
+      });
 
-		default:
-			return state;
-	}
+    default:
+      return state;
+  }
 };
 
 /***/ }),
@@ -30970,6 +30713,791 @@ document.addEventListener('DOMContentLoaded', function () {
         _routes2.default
     ), document.getElementById('root'));
 });
+
+/***/ }),
+/* 286 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _actions = __webpack_require__(76);
+
+var actions = _interopRequireWildcard(_actions);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RenderStep = function (_Component) {
+  _inherits(RenderStep, _Component);
+
+  function RenderStep() {
+    _classCallCheck(this, RenderStep);
+
+    return _possibleConstructorReturn(this, (RenderStep.__proto__ || Object.getPrototypeOf(RenderStep)).apply(this, arguments));
+  }
+
+  _createClass(RenderStep, [{
+    key: 'renderServerStatusResponse',
+    value: function renderServerStatusResponse() {
+      if (this.props.serverStatusResponse) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h4',
+            null,
+            'Status Code:'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            this.props.serverStatusResponse.statusCode,
+            ' - ',
+            this.props.serverStatusResponse.statusText
+          )
+        );
+      } else {
+        return null;
+      }
+    }
+  }, {
+    key: 'renderSentJson',
+    value: function renderSentJson() {
+      if (this.props.sentJson) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h5',
+            null,
+            'with following JSON body:'
+          ),
+          _react2.default.createElement(
+            'pre',
+            null,
+            JSON.stringify(this.props.sentJson, null, 2)
+          )
+        );
+      } else {
+        return null;
+      }
+    }
+  }, {
+    key: 'renderMessageResponseFromServer',
+    value: function renderMessageResponseFromServer() {
+      if (this.props.messageFromServer) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h4',
+            null,
+            'Message:'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            this.props.messageFromServer
+          )
+        );
+      } else {
+        return null;
+      }
+    }
+  }, {
+    key: 'renderJsonResponseFromServer',
+    value: function renderJsonResponseFromServer() {
+      if (this.props.peopleObject) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h4',
+            null,
+            'JSON:'
+          ),
+          _react2.default.createElement(
+            'pre',
+            null,
+            JSON.stringify(this.props.peopleObject, null, 2)
+          )
+        );
+      } else {
+        return null;
+      }
+    }
+  }, {
+    key: 'renderErrorResponseFromServer',
+    value: function renderErrorResponseFromServer() {
+      if (this.props.errorFromServer) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'p',
+            null,
+            this.props.errorFromServer
+          )
+        );
+      } else {
+        return null;
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h3',
+            null,
+            'Sending to server:'
+          ),
+          _react2.default.createElement(
+            'h4',
+            null,
+            this.props.taskTitle
+          ),
+          this.renderSentJson()
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h3',
+            null,
+            'Response from server:'
+          ),
+          this.renderServerStatusResponse(),
+          this.renderErrorResponseFromServer(),
+          this.renderMessageResponseFromServer(),
+          this.renderJsonResponseFromServer()
+        )
+      );
+    }
+  }]);
+
+  return RenderStep;
+}(_react.Component);
+
+exports.default = RenderStep;
+
+/***/ }),
+/* 287 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(42);
+
+var _reactRouter = __webpack_require__(65);
+
+var _actions = __webpack_require__(76);
+
+var actions = _interopRequireWildcard(_actions);
+
+var _RenderStep = __webpack_require__(286);
+
+var _RenderStep2 = _interopRequireDefault(_RenderStep);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StepFour = function (_Component) {
+  _inherits(StepFour, _Component);
+
+  function StepFour() {
+    _classCallCheck(this, StepFour);
+
+    return _possibleConstructorReturn(this, (StepFour.__proto__ || Object.getPrototypeOf(StepFour)).apply(this, arguments));
+  }
+
+  _createClass(StepFour, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.dispatch(actions.resetPeopleMessageErrorServerStatusResponse());
+      this.props.dispatch(actions.putPersonData(this.props.postPutReturnedObjectId, 'Brooklyn'));
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_RenderStep2.default, {
+          taskTitle: 'PUT request to \'/people\' endpoint',
+          sentJson: { id: this.props.postPutReturnedObjectId, favoriteCity: 'Brooklyn' },
+          messageFromServer: this.props.message,
+          errorFromServer: this.props.error,
+          serverStatusResponse: this.props.serverStatusResponse,
+          peopleObject: this.props.people
+        }),
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { to: '/stepfive' },
+          'Next >'
+        )
+      );
+    }
+  }]);
+
+  return StepFour;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)(function (_ref) {
+  var people = _ref.people,
+      message = _ref.message,
+      error = _ref.error,
+      serverStatusResponse = _ref.serverStatusResponse,
+      postPutReturnedObjectId = _ref.postPutReturnedObjectId;
+  return { people: people, message: message, error: error, serverStatusResponse: serverStatusResponse, postPutReturnedObjectId: postPutReturnedObjectId };
+})(StepFour);
+
+/***/ }),
+/* 288 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(42);
+
+var _reactRouter = __webpack_require__(65);
+
+var _actions = __webpack_require__(76);
+
+var actions = _interopRequireWildcard(_actions);
+
+var _RenderStep = __webpack_require__(286);
+
+var _RenderStep2 = _interopRequireDefault(_RenderStep);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StepOne = function (_Component) {
+  _inherits(StepOne, _Component);
+
+  function StepOne() {
+    _classCallCheck(this, StepOne);
+
+    return _possibleConstructorReturn(this, (StepOne.__proto__ || Object.getPrototypeOf(StepOne)).apply(this, arguments));
+  }
+
+  _createClass(StepOne, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.dispatch(actions.fetchPeopleDatabase());
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_RenderStep2.default, {
+          taskTitle: 'GET request to \'/people\' endpoint',
+          peopleObject: this.props.people,
+          serverStatusResponse: this.props.serverStatusResponse
+        }),
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { to: '/steptwo' },
+          'Next >'
+        )
+      );
+    }
+  }]);
+
+  return StepOne;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)(function (_ref) {
+  var people = _ref.people,
+      serverStatusResponse = _ref.serverStatusResponse;
+  return { people: people, serverStatusResponse: serverStatusResponse };
+})(StepOne);
+
+/***/ }),
+/* 289 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(42);
+
+var _reactRouter = __webpack_require__(65);
+
+var _actions = __webpack_require__(76);
+
+var actions = _interopRequireWildcard(_actions);
+
+var _RenderStep = __webpack_require__(286);
+
+var _RenderStep2 = _interopRequireDefault(_RenderStep);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StepThree = function (_Component) {
+  _inherits(StepThree, _Component);
+
+  function StepThree() {
+    _classCallCheck(this, StepThree);
+
+    return _possibleConstructorReturn(this, (StepThree.__proto__ || Object.getPrototypeOf(StepThree)).apply(this, arguments));
+  }
+
+  _createClass(StepThree, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.dispatch(actions.resetPeopleMessageErrorServerStatusResponse());
+      this.props.dispatch(actions.fetchPeopleDatabase());
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_RenderStep2.default, {
+          taskTitle: 'GET request to \'/people\' endpoint',
+          peopleObject: this.props.people,
+          serverStatusResponse: this.props.serverStatusResponse
+        }),
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { to: '/stepfour' },
+          'Next >'
+        )
+      );
+    }
+  }]);
+
+  return StepThree;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)(function (_ref) {
+  var people = _ref.people,
+      serverStatusResponse = _ref.serverStatusResponse;
+  return { people: people, serverStatusResponse: serverStatusResponse };
+})(StepThree);
+
+/***/ }),
+/* 290 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(42);
+
+var _reactRouter = __webpack_require__(65);
+
+var _actions = __webpack_require__(76);
+
+var actions = _interopRequireWildcard(_actions);
+
+var _RenderStep = __webpack_require__(286);
+
+var _RenderStep2 = _interopRequireDefault(_RenderStep);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StepTwo = function (_Component) {
+  _inherits(StepTwo, _Component);
+
+  function StepTwo() {
+    _classCallCheck(this, StepTwo);
+
+    return _possibleConstructorReturn(this, (StepTwo.__proto__ || Object.getPrototypeOf(StepTwo)).apply(this, arguments));
+  }
+
+  _createClass(StepTwo, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.dispatch(actions.resetPeopleMessageErrorServerStatusResponse());
+      this.props.dispatch(actions.postPersonData('Sean', 'New York'));
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_RenderStep2.default, {
+          taskTitle: 'POST request to \'/people\' endpoint',
+          sentJson: { name: 'Sean', favoriteCity: 'New York' },
+          messageFromServer: this.props.message,
+          errorFromServer: this.props.error,
+          serverStatusResponse: this.props.serverStatusResponse,
+          peopleObject: this.props.people
+        }),
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { to: '/stepthree' },
+          'Next >'
+        )
+      );
+    }
+  }]);
+
+  return StepTwo;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)(function (_ref) {
+  var people = _ref.people,
+      message = _ref.message,
+      error = _ref.error,
+      serverStatusResponse = _ref.serverStatusResponse;
+  return { people: people, message: message, error: error, serverStatusResponse: serverStatusResponse };
+})(StepTwo);
+
+/***/ }),
+/* 291 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(42);
+
+var _reactRouter = __webpack_require__(65);
+
+var _actions = __webpack_require__(76);
+
+var actions = _interopRequireWildcard(_actions);
+
+var _RenderStep = __webpack_require__(286);
+
+var _RenderStep2 = _interopRequireDefault(_RenderStep);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StepFive = function (_Component) {
+  _inherits(StepFive, _Component);
+
+  function StepFive() {
+    _classCallCheck(this, StepFive);
+
+    return _possibleConstructorReturn(this, (StepFive.__proto__ || Object.getPrototypeOf(StepFive)).apply(this, arguments));
+  }
+
+  _createClass(StepFive, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.dispatch(actions.resetPeopleMessageErrorServerStatusResponse());
+      this.props.dispatch(actions.fetchSpecificPersonData(this.props.postPutReturnedObjectId));
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_RenderStep2.default, {
+          taskTitle: 'GET request to \'/people/:personId\' (' + this.props.postPutReturnedObjectId + ') endpoint',
+          peopleObject: this.props.people,
+          serverStatusResponse: this.props.serverStatusResponse
+        }),
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { to: '/stepsix' },
+          'Next >'
+        )
+      );
+    }
+  }]);
+
+  return StepFive;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)(function (_ref) {
+  var people = _ref.people,
+      serverStatusResponse = _ref.serverStatusResponse,
+      postPutReturnedObjectId = _ref.postPutReturnedObjectId;
+  return { people: people, serverStatusResponse: serverStatusResponse, postPutReturnedObjectId: postPutReturnedObjectId };
+})(StepFive);
+
+/***/ }),
+/* 292 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(42);
+
+var _reactRouter = __webpack_require__(65);
+
+var _actions = __webpack_require__(76);
+
+var actions = _interopRequireWildcard(_actions);
+
+var _RenderStep = __webpack_require__(286);
+
+var _RenderStep2 = _interopRequireDefault(_RenderStep);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StepOne = function (_Component) {
+  _inherits(StepOne, _Component);
+
+  function StepOne() {
+    _classCallCheck(this, StepOne);
+
+    return _possibleConstructorReturn(this, (StepOne.__proto__ || Object.getPrototypeOf(StepOne)).apply(this, arguments));
+  }
+
+  _createClass(StepOne, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.dispatch(actions.clearState());
+      this.props.dispatch(actions.fetchPeopleDatabase());
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_RenderStep2.default, {
+          taskTitle: 'GET request to \'/people\' endpoint',
+          peopleObject: this.props.people,
+          serverStatusResponse: this.props.serverStatusResponse
+        }),
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { to: '/stepone' },
+          'Start Again'
+        )
+      );
+    }
+  }]);
+
+  return StepOne;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)(function (_ref) {
+  var people = _ref.people,
+      serverStatusResponse = _ref.serverStatusResponse;
+  return { people: people, serverStatusResponse: serverStatusResponse };
+})(StepOne);
+
+/***/ }),
+/* 293 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(42);
+
+var _reactRouter = __webpack_require__(65);
+
+var _actions = __webpack_require__(76);
+
+var actions = _interopRequireWildcard(_actions);
+
+var _RenderStep = __webpack_require__(286);
+
+var _RenderStep2 = _interopRequireDefault(_RenderStep);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StepSix = function (_Component) {
+  _inherits(StepSix, _Component);
+
+  function StepSix() {
+    _classCallCheck(this, StepSix);
+
+    return _possibleConstructorReturn(this, (StepSix.__proto__ || Object.getPrototypeOf(StepSix)).apply(this, arguments));
+  }
+
+  _createClass(StepSix, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.dispatch(actions.resetPeopleMessageErrorServerStatusResponse());
+      this.props.dispatch(actions.deletePersonData(this.props.postPutReturnedObjectId));
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_RenderStep2.default, {
+          taskTitle: 'DELETE request to \'/people/:personId\' (' + this.props.postPutReturnedObjectId + ') endpoint',
+          peopleObject: this.props.people,
+          messageFromServer: this.props.message,
+          serverStatusResponse: this.props.serverStatusResponse
+        }),
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { to: '/stepSeven' },
+          'Next >'
+        )
+      );
+    }
+  }]);
+
+  return StepSix;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)(function (_ref) {
+  var people = _ref.people,
+      message = _ref.message,
+      serverStatusResponse = _ref.serverStatusResponse,
+      postPutReturnedObjectId = _ref.postPutReturnedObjectId;
+  return { people: people, message: message, serverStatusResponse: serverStatusResponse, postPutReturnedObjectId: postPutReturnedObjectId };
+})(StepSix);
 
 /***/ })
 /******/ ]);
