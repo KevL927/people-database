@@ -20,7 +20,9 @@ class StepTwo extends Component {
           messageFromServer={this.props.message}
           errorFromServer={this.props.error}
           serverStatusResponse={this.props.serverStatusResponse}
+          peopleObject={this.props.people}
         />
+        <Link to="/stepthree">Next ></Link>
       </div>
     )
   }

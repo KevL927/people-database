@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import * as actions from '../actions/actions';
+
 export default class RenderStep extends Component {
   renderServerStatusResponse() {
     if (this.props.serverStatusResponse) {
@@ -27,19 +29,25 @@ export default class RenderStep extends Component {
     }
   }
 
-  renderResponseFromServer() {
+  renderMessageResponseFromServer() {
+    if (this.props.messageFromServer) {
+      return (
+        <div>
+          <h4>Message:</h4>
+          <p>{this.props.messageFromServer}</p>
+        </div>
+      )
+    } else {
+        return null;
+    }
+  }
+
+  renderJsonResponseFromServer() {
     if (this.props.peopleObject) {
       return (
         <div>
           <h4>JSON:</h4>
           <pre>{JSON.stringify(this.props.peopleObject, null, 2)}</pre>
-        </div>
-      )
-    } else if (this.props.messageFromServer) {
-      return (
-        <div>
-          <h4>Message:</h4>
-          <p>{this.props.messageFromServer}</p>
         </div>
       )
     } else {
@@ -71,8 +79,9 @@ export default class RenderStep extends Component {
         <div>
           <h3>Response from server:</h3>
           {this.renderServerStatusResponse()}
-          {this.renderResponseFromServer()}
           {this.renderErrorResponseFromServer()}
+          {this.renderMessageResponseFromServer()}
+          {this.renderJsonResponseFromServer()}
         </div>
       </div>
     )
