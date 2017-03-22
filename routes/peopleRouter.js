@@ -47,6 +47,7 @@ peopleRouter.post('/', function(req, res) {
       if (name === undefined || favoriteCity === undefined) {
         return res.status(422).json({error: 'Missing field'});
       } else if (err) {
+        console.error(err);
           return res.sendStatus(500);
       }
       return res.status(201).json({
