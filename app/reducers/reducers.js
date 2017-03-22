@@ -36,18 +36,8 @@ export default (state, action) => {
       });
 
     case 'FETCH_SPECIFIC_PERSON_DATA_SUCCESS':
-      let personIndexLocation = action.payload[1].findIndex(person => person._id === action.payload[0]._id);
-
-      let newPeopleArray = [
-        ...action.payload[1].slice(0, personIndexLocation),
-	action.payload[0],
-	...action.payload[1].slice(personIndexLocation+1)
-      ];
-
-      let updatePeopleArray = update(action.payload[1], {$set: newPeopleArray});
-
       return Object.assign({}, state, {
-				people: updatePeopleArray
+				people: action.payload.people[0]
       });
 
     case 'FETCH_SPECIFIC_PERSON_DATA_ERROR':

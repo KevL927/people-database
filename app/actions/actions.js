@@ -33,7 +33,7 @@ export const fetchPeopleDatabaseError = error => {
 
 const FETCH_PEOPLEDATABASE = 'FETCH_PEOPLE_DATABASE';
 export const fetchPeopleDatabase = () => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
   	return fetch('http://localhost:3000/people')
   	.then(response => response.json()
     .then(json => ({ json, response })))
@@ -51,31 +51,11 @@ export const fetchPeopleDatabase = () => {
   }
 };
 
-const FETCH_PEOPLEDATABASE2 = 'FETCH_PEOPLEDATABASE2';
-export const fetchPeopleDatabase2 = () => {
-  return (dispatch, getState) => {
-  	return fetch('http://localhost:3000/people/1')
-  	.then(response => response.json()
-    .then(json => ({ json, response })))
-  	.then(({json, response}) => {
-      dispatch(serverStatusResponse(response.status, response.statusText));
-  		if (response.ok === false) {
-  		  return Promise.reject(json);
-  		}
-  		return json;
-  	})
-  	.then(data => {
-  		return dispatch(fetchPeopleDatabaseSuccess(data));
-  	})
-  	.catch(err => dispatch(fetchPeopleDatabaseError(err)));
-  }
-};
-
 export const FETCH_SPECIFIC_PERSON_DATA_SUCCESS = 'FETCH_SPECIFIC_PERSON_DATA_SUCCESS';
-export const fetchSpecificPersonDataSuccess = (personArray, currentPeopleArray) => {
+export const fetchSpecificPersonDataSuccess = personArray => {
   return {
       type: FETCH_SPECIFIC_PERSON_DATA_SUCCESS,
-      payload: [personArray, currentPeopleArray]
+      payload: personArray
   };
 };
 
@@ -89,8 +69,8 @@ export const fetchSpecificPersonDataError = error => {
 
 const FETCH_SPECIFIC_PERSON_DATA = 'FETCH_SPECIFIC_PERSON_DATA';
 export const fetchSpecificPersonData = personId => {
-  return (dispatch, getState) => {
-  	return fetch('http://localhost:3000/people' + personId)
+  return (dispatch) => {
+  	return fetch('http://localhost:3000/people/' + personId)
   	.then(response => response.json().then(json => ({ json, response })))
   	.then(({json, response}) => {
   		if (response.ok === false) {
@@ -99,7 +79,7 @@ export const fetchSpecificPersonData = personId => {
   		return json;
   	})
   	.then(data => {
-  		return dispatch(fetchSpecificPersonDataSuccess(data, getState().people))
+  		return dispatch(fetchSpecificPersonDataSuccess(data))
   	})
   	.catch(err => dispatch(fetchSpecificPersonDataError(err)));
   }
