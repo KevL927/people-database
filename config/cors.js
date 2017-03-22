@@ -1,4 +1,4 @@
-const whitelist = ['https://people-database.herokuapp.com/'];
+const whitelist = ['https://people-database.herokuapp.com/', 'https://people-database.herokuapp.com', 'https://people-database.herokuapp.com/people', 'https://people-database.herokuapp.com/people/', 'http://locahost:3000'];
 
 
 module.exports = (req, res, next) => {

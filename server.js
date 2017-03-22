@@ -18,6 +18,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hjs');
 
 app.use('/people/*', setCORS);
+app.use('/people', setCORS);
 app.use('/*', setCORS);
 
 app.use(logger('dev'));
