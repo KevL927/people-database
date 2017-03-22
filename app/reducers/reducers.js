@@ -49,12 +49,12 @@ export default (state, action) => {
 
 				case 'POST_PERSON_DATA_SUCCESS':
 				    return Object.assign({}, state, {
-				        message: action.payload
+				        message: action.payload.message
 				    });
 
 			  case 'POST_PERSON_DATA_ERROR':
 			    return Object.assign({}, state, {
-			        error: action.payload
+			        error: action.payload.error
 			    });
 
 			  case 'PUT_PERSON_DATA_SUCCESS':
@@ -64,17 +64,17 @@ export default (state, action) => {
 
 			  case 'PUT_PERSON_DATA_ERROR':
 			    return Object.assign({}, state, {
-			        error: action.payload
+			        error: action.payload.error
 			    });
 
 				case 'DELETE_PERSON_DATA_SUCCESS':
 			    return Object.assign({}, state, {
-			        message: action.payload
+			        message: action.payload.message
 			    });
 
 			  case 'DELETE_PERSON_DATA_ERROR':
 			    return Object.assign({}, state, {
-			        error: action.payload
+			        error: action.payload.error
 			    });
 
         default:

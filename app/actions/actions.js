@@ -28,7 +28,8 @@ const FETCH_PEOPLEDATABASE = 'FETCH_PEOPLE_DATABASE';
 export const fetchPeopleDatabase = () => {
   return (dispatch) => {
   	return fetch('http://localhost:3000/people')
-  	.then(response => response.json().then(json => ({ json, response })))
+  	.then(response => response.json()
+    .then(json => ({ json, response })))
   	.then(({json, response}) => {
       dispatch(serverStatusResponse(response.status, response.statusText));
   		if (response.ok === false) {
@@ -106,13 +107,18 @@ export const postPersonData = (name, favoriteCity) => {
         body: JSON.stringify({name: name, favoriteCity: favoriteCity})
       }
     )
-  	.then(res => {
-  		return res.json();
+    .then(response => response.json()
+    .then(json => ({ json, response })))
+  	.then(({json, response}) => {
+      dispatch(serverStatusResponse(response.status, response.statusText));
+  		if (response.ok === false) {
+  		  return Promise.reject(json);
+  		}
+  		return json;
   	})
-    .then(data => {
-      dispatch(postPersonDataSuccess(data));
-      dispatch(fetchPeopleDatabase());
-    })
+  	.then(data => {
+  		return dispatch(postPersonDataSuccess(data))
+  	})
   	.catch(err => dispatch(postPersonDataError(err)));
   }
 };
@@ -146,14 +152,18 @@ export const putPersonData = (personId, name, favoriteCity) => {
         body: JSON.stringify({_id: personId, name: name, favoriteCity: favoriteCity})
       }
     )
-  	.then(res => {
-  		return res.json();
+    .then(response => response.json()
+    .then(json => ({ json, response })))
+  	.then(({json, response}) => {
+      dispatch(serverStatusResponse(response.status, response.statusText));
+  		if (response.ok === false) {
+  		  return Promise.reject(json);
+  		}
+  		return json;
   	})
-    .then(data => {
-      console.log(data);
-      dispatch(putPersonDataSuccess(data));
-      dispatch(fetchSpecificPersonData(personId));
-    })
+  	.then(data => {
+  		return dispatch(putPersonDataSuccess(data))
+  	})
   	.catch(err => dispatch(putPersonDataError(err)));
   }
 };
@@ -182,12 +192,17 @@ export const deletePersonData = (personId) => {
         method: 'DELETE',
       }
     )
-  	.then(res => {
-  		return res.json();
+    .then(response => response.json()
+    .then(json => ({ json, response })))
+  	.then(({json, response}) => {
+      dispatch(serverStatusResponse(response.status, response.statusText));
+  		if (response.ok === false) {
+  		  return Promise.reject(json);
+  		}
+  		return json;
   	})
   	.then(data => {
-  		dispatch(deletePersonDataSuccess(data));
-      dispatch(fetchPeopleDatabase());
+  		return dispatch(deletePersonDataSuccess(data))
   	})
   	.catch(err => dispatch(deletePersonDataError(err)));
   }
