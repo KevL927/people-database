@@ -60,15 +60,13 @@ peopleRouter.post('/', function(req, res) {
 
 peopleRouter.put('/', function(req, res) {
   var peopleId = req.body.id;
-  var name = req.body.name;
   var favoriteCity = req.body.favoriteCity;
 
-  if (peopleId.match(/^[0-9a-fA-F]{24}$/) && favoriteCity && name === undefined) {
+  if (peopleId.match(/^[0-9a-fA-F]{24}$/) && favoriteCity) {
     People.findByIdAndUpdate(peopleId, { favoriteCity: favoriteCity }, { new: true },
       function(err, people) {
         let peopleArray = [people];
         if (err) {
-          console.log(err);
           return res.sendStatus(500);
         }
         return res.status(201).json({
