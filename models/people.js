@@ -4,8 +4,7 @@ var Schema = mongoose.Schema;
 const PeopleSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     favoriteCity: {
         type: String,
