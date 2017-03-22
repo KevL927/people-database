@@ -14,7 +14,20 @@ export default class RenderStep extends Component {
     }
   }
 
-  renderPeopleJson() {
+  renderSentJson() {
+    if (this.props.sentJson) {
+      return (
+        <div>
+          <h5>with following JSON body:</h5>
+          <pre>{JSON.stringify(this.props.sentJson, null, 2)}</pre>
+        </div>
+      )
+    } else {
+        return null;
+    }
+  }
+
+  renderResponseFromServer() {
     if (this.props.peopleObject) {
       return (
         <div>
@@ -22,7 +35,27 @@ export default class RenderStep extends Component {
           <pre>{JSON.stringify(this.props.peopleObject, null, 2)}</pre>
         </div>
       )
+    } else if (this.props.messageFromServer) {
+      return (
+        <div>
+          <h4>Message:</h4>
+          <p>{this.props.messageFromServer}</p>
+        </div>
+      )
     } else {
+        return null;
+    }
+  }
+
+  renderErrorResponseFromServer() {
+    if (this.props.errorFromServer) {
+      return (
+        <div>
+          <p>{this.props.errorFromServer}</p>
+        </div>
+      )
+    }
+    else {
         return null;
     }
   }
@@ -31,12 +64,15 @@ export default class RenderStep extends Component {
     return (
       <div>
         <div>
-          <h2>{this.props.taskTitle}</h2>
+          <h3>Sending to server:</h3>
+          <h4>{this.props.taskTitle}</h4>
+          {this.renderSentJson()}
         </div>
         <div>
-          <h3>Response from the server:</h3>
+          <h3>Response from server:</h3>
           {this.renderServerStatusResponse()}
-          {this.renderPeopleJson()}
+          {this.renderResponseFromServer()}
+          {this.renderErrorResponseFromServer()}
         </div>
       </div>
     )
