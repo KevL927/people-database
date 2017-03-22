@@ -1,27 +1,41 @@
 import fetch from 'isomorphic-fetch';
 
+export const RESET_TO_INITIAL_STATE = 'RESET_TO_INITIAL_STATE';
+export const resetToInitialState = () => {
+  return {
+      type: RESET_TO_INITIAL_STATE,
+  };
+}
+
+export const COPY_CURRENT_PEOPLE_OBJECT_TO_PREVIOUS = 'COPY_CURRENT_PEOPLE_OBJECT_TO_PREVIOUS'
+export const copyCurrentPeopleObjectToPrevious = () => {
+  return {
+    type: COPY_CURRENT_PEOPLE_OBJECT_TO_PREVIOUS
+  };
+}
+
 export const SERVER_STATUS_RESPONSE = 'SERVER_STATUS_RESPONSE';
 export const serverStatusResponse = (statusCode, statusText) => {
-    return {
-        type: SERVER_STATUS_RESPONSE,
-        payload: {statusCode, statusText}
-    };
+  return {
+      type: SERVER_STATUS_RESPONSE,
+      payload: {statusCode, statusText}
+  };
 }
 
 export const FETCH_PEOPLEDATABASE_SUCCESS = 'FETCH_PEOPLEDATABASE_SUCCESS';
 export const fetchPeopleDatabaseSuccess = peopleArray => {
-    return {
-        type: FETCH_PEOPLEDATABASE_SUCCESS,
-        payload: peopleArray
-    };
+  return {
+      type: FETCH_PEOPLEDATABASE_SUCCESS,
+      payload: peopleArray
+  };
 };
 
 export const FETCH_PEOPLEDATABASE_ERROR = 'FETCH_PEOPLEDATABASE_ERROR';
 export const fetchPeopleDatabaseError = error => {
-    return {
-        type: FETCH_PEOPLEDATABASE_ERROR,
-        payload: error
-    };
+  return {
+      type: FETCH_PEOPLEDATABASE_ERROR,
+      payload: error
+  };
 }
 
 const FETCH_PEOPLEDATABASE = 'FETCH_PEOPLE_DATABASE';
@@ -46,18 +60,18 @@ export const fetchPeopleDatabase = () => {
 
 export const FETCH_SPECIFIC_PERSON_DATA_SUCCESS = 'FETCH_SPECIFIC_PERSON_DATA_SUCCESS';
 export const fetchSpecificPersonDataSuccess = (personArray, currentPeopleArray) => {
-    return {
-        type: FETCH_SPECIFIC_PERSON_DATA_SUCCESS,
-        payload: [personArray, currentPeopleArray]
-    };
+  return {
+      type: FETCH_SPECIFIC_PERSON_DATA_SUCCESS,
+      payload: [personArray, currentPeopleArray]
+  };
 };
 
 export const FETCH_SPECIFIC_PERSON_DATA_ERROR = 'FETCH_SPECIFIC_PERSON_DATA_ERROR';
 export const fetchSpecificPersonDataError = error => {
-    return {
-        type: FETCH_SPECIFIC_PERSON_DATA_ERROR,
-        payload: error
-    };
+  return {
+      type: FETCH_SPECIFIC_PERSON_DATA_ERROR,
+      payload: error
+  };
 }
 
 const FETCH_SPECIFIC_PERSON_DATA = 'FETCH_SPECIFIC_PERSON_DATA';
@@ -80,18 +94,18 @@ export const fetchSpecificPersonData = personId => {
 
 export const POST_PERSON_DATA_SUCCESS = 'POST_PERSON_DATA_SUCCESS';
 export const postPersonDataSuccess = successMessage => {
-    return {
-        type: POST_PERSON_DATA_SUCCESS,
-        payload: successMessage
-    };
+  return {
+      type: POST_PERSON_DATA_SUCCESS,
+      payload: successMessage
+  };
 };
 
 export const POST_PERSON_DATA_ERROR = 'POST_PERSON_DATA_ERROR';
 export const postPersonDataError = error => {
-    return {
-        type: POST_PERSON_DATA_ERROR,
-        payload: error
-    };
+  return {
+      type: POST_PERSON_DATA_ERROR,
+      payload: error
+  };
 }
 
 const POST_PERSON_DATA = 'POST_PERSON_DATA';
@@ -125,18 +139,18 @@ export const postPersonData = (name, favoriteCity) => {
 
 export const PUT_PERSON_DATA_SUCCESS = 'PUT_PERSON_DATA_SUCCESS';
 export const putPersonDataSuccess = successMessage => {
-    return {
-        type: PUT_PERSON_DATA_SUCCESS,
-        payload: successMessage
-    };
+  return {
+      type: PUT_PERSON_DATA_SUCCESS,
+      payload: successMessage
+  };
 };
 
 export const PUT_PERSON_DATA_ERROR = 'PUT_PERSON_DATA_ERROR';
 export const putPersonDataError = error => {
-    return {
-        type: PUT_PERSON_DATA_ERROR,
-        payload: error
-    };
+  return {
+      type: PUT_PERSON_DATA_ERROR,
+      payload: error
+  };
 }
 
 const PUT_PERSON_DATA = 'PUT_PERSON_DATA';
@@ -170,18 +184,18 @@ export const putPersonData = (personId, name, favoriteCity) => {
 
 export const DELETE_PERSON_DATA_SUCCESS = 'DELETE_PERSON_DATA_SUCCESS';
 export const deletePersonDataSuccess = successMessage => {
-    return {
-        type: DELETE_PERSON_DATA_SUCCESS,
-        payload: successMessage
-    };
+  return {
+      type: DELETE_PERSON_DATA_SUCCESS,
+      payload: successMessage
+  };
 };
 
 export const DELETE_PERSON_DATA_ERROR = 'DELETE_PERSON_DATA_ERROR';
 export const deletePersonDataError = error => {
-    return {
-        type: DELETE_PERSON_DATA_ERROR,
-        payload: error
-    };
+  return {
+      type: DELETE_PERSON_DATA_ERROR,
+      payload: error
+  };
 }
 
 const DELETE_PERSON_DATA = 'DELETE_PERSON_DATA';
