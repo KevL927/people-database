@@ -41,7 +41,7 @@ export const fetchPeopleDatabaseError = error => {
 const FETCH_PEOPLEDATABASE = 'FETCH_PEOPLE_DATABASE';
 export const fetchPeopleDatabase = () => {
   return (dispatch) => {
-  	return fetch('https://people-database.herokuapp.com/people')
+  	return fetch('https://people-database.herokuapp.com/people/')
   	.then(response => response.json()
     .then(json => ({ json, response })))
   	.then(({json, response}) => {
@@ -111,7 +111,7 @@ export const postPersonDataError = error => {
 const POST_PERSON_DATA = 'POST_PERSON_DATA';
 export const postPersonData = (name, favoriteCity) => {
   return (dispatch) => {
-  	return fetch('https://people-database.herokuapp.com/people',
+  	return fetch('https://people-database.herokuapp.com/people/',
       {
         headers: {
           'Accept': 'application/json',
@@ -156,7 +156,7 @@ export const putPersonDataError = error => {
 const PUT_PERSON_DATA = 'PUT_PERSON_DATA';
 export const putPersonData = (personId, favoriteCity) => {
   return (dispatch) => {
-  	return fetch('https://people-database.herokuapp.com/people',
+  	return fetch('https://people-database.herokuapp.com/people/',
       {
         headers: {
           'Accept': 'application/json',
