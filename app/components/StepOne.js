@@ -15,7 +15,8 @@ class StepOne extends Component {
       <div>
         <RenderStep
           taskTitle={'Sending a GET request to \'/people\' endpoint'}
-          peopleObject={this.props.people} serverStatusResponse={this.props.serverStatusResponse}
+          peopleObject={this.props.people}
+          serverStatusResponse={this.props.serverStatusResponse}
         />
       </div>
     )
