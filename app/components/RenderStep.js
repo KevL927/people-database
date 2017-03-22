@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 export default class RenderStep extends Component {
-  renderServerStatusResponse(props) {
+  renderServerStatusResponse() {
     if (this.props.serverStatusResponse) {
       return (
         <div>
@@ -14,7 +14,7 @@ export default class RenderStep extends Component {
     }
   }
 
-  renderPeopleJson(props) {
+  renderPeopleJson() {
     if (this.props.peopleObject) {
       return (
         <div>
