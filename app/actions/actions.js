@@ -51,6 +51,26 @@ export const fetchPeopleDatabase = () => {
   }
 };
 
+const FETCH_PEOPLEDATABASE2 = 'FETCH_PEOPLEDATABASE2';
+export const fetchPeopleDatabase2 = () => {
+  return (dispatch, getState) => {
+  	return fetch('http://localhost:3000/people/1')
+  	.then(response => response.json()
+    .then(json => ({ json, response })))
+  	.then(({json, response}) => {
+      dispatch(serverStatusResponse(response.status, response.statusText));
+  		if (response.ok === false) {
+  		  return Promise.reject(json);
+  		}
+  		return json;
+  	})
+  	.then(data => {
+  		return dispatch(fetchPeopleDatabaseSuccess(data));
+  	})
+  	.catch(err => dispatch(fetchPeopleDatabaseError(err)));
+  }
+};
+
 export const FETCH_SPECIFIC_PERSON_DATA_SUCCESS = 'FETCH_SPECIFIC_PERSON_DATA_SUCCESS';
 export const fetchSpecificPersonDataSuccess = (personArray, currentPeopleArray) => {
   return {
