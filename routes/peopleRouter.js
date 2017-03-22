@@ -44,9 +44,6 @@ peopleRouter.post('/', function(req, res) {
     if (name === undefined || favoriteCity === undefined) {
       return res.status(422).json({error: 'Missing field'});
     }
-    else if (err && err.errmsg.slice(0,6) === 'E11000') {
-      return res.status(409).json({error: 'User already exists'});
-    }
     else if (err) {
       return res.sendStatus(500);
     }
@@ -55,7 +52,7 @@ peopleRouter.post('/', function(req, res) {
 });
 
 peopleRouter.put('/', function(req, res) {
-  var peopleId = req.body._id;
+  var peopleId = req.body.id;
   var name = req.body.name;
   var favoriteCity = req.body.favoriteCity;
 
