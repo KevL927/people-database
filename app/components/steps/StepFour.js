@@ -22,6 +22,7 @@ class StepFour extends Component {
           serverStatusResponse={this.props.serverStatusResponse}
           peopleObject={this.props.people}
         />
+        <Link to="/stepfive">Next ></Link>
       </div>
     )
   }
