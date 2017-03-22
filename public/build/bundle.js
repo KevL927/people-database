@@ -2039,7 +2039,7 @@ var fetchPeopleDatabaseError = exports.fetchPeopleDatabaseError = function fetch
 var FETCH_PEOPLEDATABASE = 'FETCH_PEOPLE_DATABASE';
 var fetchPeopleDatabase = exports.fetchPeopleDatabase = function fetchPeopleDatabase() {
   return function (dispatch) {
-    return (0, _isomorphicFetch2.default)('https://people-database.herokuapp.com/people').then(function (response) {
+    return (0, _isomorphicFetch2.default)('https://people-database.herokuapp.com/people/').then(function (response) {
       return response.json().then(function (json) {
         return { json: json, response: response };
       });
@@ -2118,7 +2118,7 @@ var postPersonDataError = exports.postPersonDataError = function postPersonDataE
 var POST_PERSON_DATA = 'POST_PERSON_DATA';
 var postPersonData = exports.postPersonData = function postPersonData(name, favoriteCity) {
   return function (dispatch) {
-    return (0, _isomorphicFetch2.default)('https://people-database.herokuapp.com/people', {
+    return (0, _isomorphicFetch2.default)('https://people-database.herokuapp.com/people/', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -2165,7 +2165,7 @@ var putPersonDataError = exports.putPersonDataError = function putPersonDataErro
 var PUT_PERSON_DATA = 'PUT_PERSON_DATA';
 var putPersonData = exports.putPersonData = function putPersonData(personId, favoriteCity) {
   return function (dispatch) {
-    return (0, _isomorphicFetch2.default)('https://people-database.herokuapp.com/people', {
+    return (0, _isomorphicFetch2.default)('https://people-database.herokuapp.com/people/', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
