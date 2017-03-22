@@ -40,15 +40,22 @@ peopleRouter.post('/', function(req, res) {
   var name = req.body.name;
   var favoriteCity = req.body.favoriteCity;
 
-  People.create({ name: name, favoriteCity: favoriteCity }, function(err, people) {
-    if (name === undefined || favoriteCity === undefined) {
-      return res.status(422).json({error: 'Missing field'});
+  People.create({ name: name, favoriteCity: favoriteCity },
+    function(err, people) {
+      let peopleArray = [people];
+      if (name === undefined || favoriteCity === undefined) {
+        return res.status(422).json({error: 'Missing field'});
+      } else if (err) {
+          return res.sendStatus(500);
+      }
+      return res.status(201).json({
+        message: 'User Created Successfully',
+        people: peopleArray.map(
+          person => person.apiRepr()
+        )
+      });
     }
-    else if (err) {
-      return res.sendStatus(500);
-    }
-    return res.status(201).json({message: 'User created successfully'});
-  })
+  )
 });
 
 peopleRouter.put('/', function(req, res) {
