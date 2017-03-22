@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 
 var index = require('./routes/index');
 var peopleRouter = require('./routes/peopleRouter');
+var setCORS = require('./config/cors');
 
 var app = express();
 
@@ -15,6 +16,9 @@ mongoose.connect(process.env.DATABASE_URI || global.databaseUri || 'mongodb://lo
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hjs');
+
+app.use('/people/*', setCORS);
+app.use('/*', setCORS);
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
