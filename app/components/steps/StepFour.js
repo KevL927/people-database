@@ -5,30 +5,29 @@ import { Link } from 'react-router';
 import * as actions from '../../actions/actions';
 import RenderStep from '../RenderStep';
 
-class StepTwo extends Component {
+class StepFour extends Component {
   componentDidMount() {
     this.props.dispatch(actions.resetPeopleMessageErrorServerStatusResponse());
-    this.props.dispatch(actions.postPersonData('Sean', 'New York'));
+    this.props.dispatch(actions.putPersonData(this.props.postPutReturnedObjectId, 'Brooklyn'));
   }
 
   render() {
     return (
       <div>
         <RenderStep
-          taskTitle={'POST request to \'/people\' endpoint'}
-          sentJson={{name: 'Sean', favoriteCity: 'New York'}}
+          taskTitle={'PUT request to \'/people\' endpoint'}
+          sentJson={{id: this.props.postPutReturnedObjectId, favoriteCity: 'Brooklyn'}}
           messageFromServer={this.props.message}
           errorFromServer={this.props.error}
           serverStatusResponse={this.props.serverStatusResponse}
           peopleObject={this.props.people}
         />
-        <Link to="/stepthree">Next ></Link>
       </div>
     )
   }
 }
 
 export default connect(
-  ({ people, message, error, serverStatusResponse }) =>
-  ({ people, message, error, serverStatusResponse })
-)(StepTwo);
+  ({ people, message, error, serverStatusResponse, postPutReturnedObjectId }) =>
+  ({ people, message, error, serverStatusResponse, postPutReturnedObjectId })
+)(StepFour);
