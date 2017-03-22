@@ -1,9 +1,9 @@
 import fetch from 'isomorphic-fetch';
 
-export const RESET_TO_INITIAL_STATE = 'RESET_TO_INITIAL_STATE';
-export const resetToInitialState = () => {
+export const RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE = 'RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE';
+export const resetPeopleMessageErrorServerStatusResponse = () => {
   return {
-      type: RESET_TO_INITIAL_STATE,
+      type: RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE,
   };
 }
 
@@ -86,10 +86,10 @@ export const fetchSpecificPersonData = personId => {
 };
 
 export const POST_PERSON_DATA_SUCCESS = 'POST_PERSON_DATA_SUCCESS';
-export const postPersonDataSuccess = successMessage => {
+export const postPersonDataSuccess = successMessageAndObject => {
   return {
       type: POST_PERSON_DATA_SUCCESS,
-      payload: successMessage
+      payload: successMessageAndObject
   };
 };
 
@@ -131,10 +131,10 @@ export const postPersonData = (name, favoriteCity) => {
 };
 
 export const PUT_PERSON_DATA_SUCCESS = 'PUT_PERSON_DATA_SUCCESS';
-export const putPersonDataSuccess = successMessage => {
+export const putPersonDataSuccess = successMessageAndObject => {
   return {
       type: PUT_PERSON_DATA_SUCCESS,
-      payload: successMessage
+      payload: successMessageAndObject
   };
 };
 
@@ -147,7 +147,7 @@ export const putPersonDataError = error => {
 }
 
 const PUT_PERSON_DATA = 'PUT_PERSON_DATA';
-export const putPersonData = (personId, name, favoriteCity) => {
+export const putPersonData = (personId, favoriteCity) => {
   return (dispatch) => {
   	return fetch('http://localhost:3000/people',
       {
@@ -156,7 +156,7 @@ export const putPersonData = (personId, name, favoriteCity) => {
           'Content-Type': 'application/json'
         },
         method: 'PUT',
-        body: JSON.stringify({_id: personId, name: name, favoriteCity: favoriteCity})
+        body: JSON.stringify({id: personId, favoriteCity: favoriteCity})
       }
     )
     .then(response => response.json()

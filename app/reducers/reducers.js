@@ -12,8 +12,13 @@ export default (state, action) => {
 	state = state || initialState;
 
   switch(action.type) {
-    case 'RESET_TO_INITIAL_STATE':
-      return Object.assign({}, state, initialState);
+    case 'RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE':
+      return Object.assign({}, state, {
+				people: null,
+				message: null,
+				error: null,
+				serverStatusResponse: null
+			});
 
     case 'SERVER_STATUS_RESPONSE':
       return Object.assign({}, state, {
@@ -64,7 +69,9 @@ export default (state, action) => {
 
     case 'PUT_PERSON_DATA_SUCCESS':
       return Object.assign({}, state, {
-				message: action.payload.message
+				message: action.payload.message,
+				people: action.payload.people[0],
+				postPutReturnedObjectId: action.payload.people[0].id
       });
 
     case 'PUT_PERSON_DATA_ERROR':
