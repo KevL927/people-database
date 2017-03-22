@@ -17,6 +17,19 @@ peopleRouter.get('/', function(req, res) {
   });
 });
 
+peopleRouter.get('/1', function(req, res) {
+  People.find({}, function(err, people) {
+    if (err) {
+      return res.status(err);
+    }
+    return res.status(200).json({
+      people: people.map(
+        person => person.apiRepr()
+      )
+    });
+  });
+});
+
 peopleRouter.get('/:peopleId', function(req, res) {
   var peopleId = req.params.peopleId;
 
