@@ -7,11 +7,11 @@ import RenderStep from '../RenderStep';
 
 class StepTwo extends Component {
   componentDidMount() {
+    this.props.dispatch(actions.resetToInitialState());
     this.props.dispatch(actions.postPersonData('Sean', 'New York'));
   }
 
   render() {
-    console.log(this.props.error)
     return (
       <div>
         <RenderStep
