@@ -1,9 +1,16 @@
 import fetch from 'isomorphic-fetch';
 
+export const CLEAR_STATE = 'CLEAR_STATE';
+export const clearState = () => {
+  return {
+      type: CLEAR_STATE
+  };
+}
+
 export const RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE = 'RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE';
 export const resetPeopleMessageErrorServerStatusResponse = () => {
   return {
-      type: RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE,
+      type: RESET_PEOPLE_MESSAGE_ERROR_SERVERSTATUSRESPONSE
   };
 }
 
