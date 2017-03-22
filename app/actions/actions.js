@@ -7,13 +7,6 @@ export const resetToInitialState = () => {
   };
 }
 
-export const COPY_CURRENT_PEOPLE_OBJECT_TO_PREVIOUS = 'COPY_CURRENT_PEOPLE_OBJECT_TO_PREVIOUS'
-export const copyCurrentPeopleObjectToPrevious = () => {
-  return {
-    type: COPY_CURRENT_PEOPLE_OBJECT_TO_PREVIOUS
-  };
-}
-
 export const SERVER_STATUS_RESPONSE = 'SERVER_STATUS_RESPONSE';
 export const serverStatusResponse = (statusCode, statusText) => {
   return {
@@ -40,7 +33,7 @@ export const fetchPeopleDatabaseError = error => {
 
 const FETCH_PEOPLEDATABASE = 'FETCH_PEOPLE_DATABASE';
 export const fetchPeopleDatabase = () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
   	return fetch('http://localhost:3000/people')
   	.then(response => response.json()
     .then(json => ({ json, response })))
@@ -52,7 +45,7 @@ export const fetchPeopleDatabase = () => {
   		return json;
   	})
   	.then(data => {
-  		return dispatch(fetchPeopleDatabaseSuccess(data))
+  		return dispatch(fetchPeopleDatabaseSuccess(data));
   	})
   	.catch(err => dispatch(fetchPeopleDatabaseError(err)));
   }
@@ -86,7 +79,7 @@ export const fetchSpecificPersonData = personId => {
   		return json;
   	})
   	.then(data => {
-  		dispatch(fetchSpecificPersonDataSuccess(data, getState().people))
+  		return dispatch(fetchSpecificPersonDataSuccess(data, getState().people))
   	})
   	.catch(err => dispatch(fetchSpecificPersonDataError(err)));
   }
